@@ -44,7 +44,7 @@
 		<td align="left" width="120" valign="bottom">
 			<input type="submit" value="검색">
 			&nbsp;
-			<a href="product_new"><input type="button" value="새상품"></a>
+			<a href="${pageContext.servletContext.contextPath}/admin/product/add"><input type="button" value="새상품"></a>
 		</td>
 	</tr>
 	<tr><td height="5"></td></tr>

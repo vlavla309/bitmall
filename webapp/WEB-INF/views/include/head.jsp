@@ -2,6 +2,85 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<header id = 'header'>
+	<div id = "wrap-header-logo">
+	<h1><a href="${pageContext.servletContext.contextPath }">BIT MALL</a></h1>
+	</div>
+	<%-- <div class = "menu-left">
+		<ul>
+			<li><a href="${pageContext.servletContext.contextPath }/product">Products</a></li>
+			<li><a href="#">About</a></li>
+		</ul>
+	</div> --%>
+	<div class="menu-right">
+			<div class="info">
+				<img src="${pageContext.servletContext.contextPath }/assets/images/info_icon.png">
+				&nbsp;
+				<ul class="info-list" style="display: none;">
+					<li><a href="${pageContext.servletContext.contextPath }/member/login" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGIN
+					</a></li>
+					<li><a href="${pageContext.servletContext.contextPath }/member/join" class="xans-element- xans-layout xans-layout-statelogoff log ">JOIN
+					</a></li>
+					<li><a href="/myshop/index.html" class="xans-element- xans-layout xans-layout-statelogoff log ">MY PAGE </a></li>
+					<li><a href="/myshop/order/list.html" class="xans-element- xans-layout xans-layout-statelogoff log ">주문조회 </a></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+			<div class="bag">
+				<img src="${pageContext.servletContext.contextPath }/assets/images/bag_icon.png">
+				&nbsp;
+				<ul class="info-list" style="display: none;">
+					<li><a href="${pageContext.servletContext.contextPath}/cart" class="xans-element- xans-layout xans-layout-statelogoff log ">CART </a></li>
+				</ul>
+			</div>
+			<div class="search">
+				<img src="${pageContext.servletContext.contextPath }/assets/images/search_icon.png">
+				&nbsp;
+				<ul class="info-list" style="display: none;">
+					<form id="searchBarForm" name="" action="" method="get" enctype="">
+						<li class="xans-element- xans-layout xans-layout-searchheader ">
+							<!--
+                    $product_page=/product/detail.html
+                    $category_page=/product/list.html
+                -->
+							<fieldset class="key_rel">
+								<input id="keyword" name="searchValue" class="input-search" placeholder="SEARCH" value="" type="text">
+								<input type="image" class="btn-search" src="${pageContext.servletContext.contextPath }/assets/images/search_icon.png" alt="검색">
+							</fieldset>
+						</li>
+					</form>
+				</ul>
+			</div>
+		<!-- 메뉴  끝  -->
+	</div>
+	<div class="menu-left">
+			<div class="product">
+				<span><a href="${pageContext.servletContext.contextPath }/product">Product</a></span>
+				<ul class="category-list" style="display: none;">
+					<c:forEach items="${categories}" var="category">
+						<li><a href="${pageContext.servletContext.contextPath }/product?categoryNo=${category.no}">${category.name}</a></li>
+					</c:forEach>
+				</ul>
+			</div>
+			<div class="board">
+				<span>board</span>
+				<ul class="info-list" style="display: none;">
+					<li><a href="${pageContext.servletContext.contextPath}/board/faq" class="xans-element- xans-layout xans-layout-statelogoff log ">FAQ </a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/board/qna" class="xans-element- xans-layout xans-layout-statelogoff log ">QNA </a></li>
+				</ul>
+			</div>
+			<div class="about">
+				<span>About</span>
+				<%-- <ul class="info-list" style="display: none;">
+					<li><a href="${pageContext.servletContext.contextPath}/cart" class="xans-element- xans-layout xans-layout-statelogoff log ">CART </a></li>
+				</ul> --%>
+			</div>
+	</div>
+	<!-- 메뉴  시작 -->
+
+	
+</header><%-- 
 <table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr> 
 		<td>
@@ -68,4 +147,4 @@
 		<td><img src="${pageContext.servletContext.contextPath }/assets/images/main_image0.jpg" width="182" height="175"></td>
 	  <td><img src="${pageContext.servletContext.contextPath }/assets/images/main_image1.jpg" width="777" height="175"></td>
 	</tr>
-</table>
+</table> --%>

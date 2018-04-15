@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="option">
+<select id="getByNo" resultType="optionvo" parameterType="long">
+	<![CDATA[
+		SELECT a.no, 
+       		   a.name,
+       		   a.status,
+       		   a.parent_no as 'parentNo',
+       		   b.name as 'parentName'
+		FROM   options a
+		LEFT JOIN options b ON a.parent_no = b.no
+		WHERE a.no = #{no}
+	]]>
+</select>
+
+<select id="getParentOptionList" resultType="optionvo"  >
+	<![CDATA[
+		SELECT a.no, 
+       		   a.name,
+       		   a.status,
+       		   a.parent_no as 'parentNo',
+       		   b.name as 'parentName'
+		FROM   options a
+		LEFT JOIN options b ON a.parent_no = b.no
+		WHERE a.status = true
+        AND (a.parent_no is null OR a.parent_no =0)
+	]]>
+</select>
+	
+<select id="getSubOptionListByParentOptionNo" resultType="optionvo"  parameterType="long">
+	<![CDATA[
+		SELECT a.no, 
+       		   a.name,
+       		   a.status,
+       		   a.parent_no as 'parentNo',
+       		   b.name as 'parentName'
+		FROM   options a
+		LEFT JOIN options b ON a.parent_no = b.no
+		WHERE a.status = true
+        AND a.parent_no = #{parentNo}
+	]]>
+</select>
+
+<insert id="insert" parameterType="optionvo">
+	<![CDATA[
+		INSERT INTO options 
+	]]>
+	<choose>
+	<when test="parentNo != 0">
+            		(name, status, parent_no) 
+		VALUES      (#{name}, true, #{parentNo})
+	</when>
+	<otherwise>
+		(name, status) 
+		VALUES      (#{name}, true)
+	</otherwise>
+	</choose> 
+</insert>
+
+<update id="update" parameterType="optionvo">
+	<![CDATA[
+		UPDATE options 
+		SET    name = #{name}, status = ${status}
+		WHERE  no = #{no}
+	]]>
+</update>
+
+</mapper>

@@ -1,13 +1,88 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/global.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/product.css" rel="stylesheet" type="text/css">
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/global.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/cart.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			getCartCookieValue();
+		})
+	</script>
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
+<%-- <jsp:include page="/WEB-INF/views/include/search.jsp"/> --%>
+<div id="wrapper">
+	<div id = 'wrap-index-item'>
+		<ul>
+			<li><a href="${pageContext.servletContext.contextPath}/product"><img src = "${pageContext.servletContext.contextPath}/assets/images/main_item1.jpg"/></a></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	<div id = 'wrap-products'>
+			<div class="product-list-header">
+				<h1>New Arrival</h1>
+			</div>
+			<ul id = 'product-list'>
+				<c:forEach items="${products}" var="product">
+				<li class ='wrap-product'>
+					<div class='wrap-img'>
+						<a href="${pageContext.servletContext.contextPath}/product/${product.no}?${params.queryString}">
+							<img class='img-product' src="${pageContext.servletContext.contextPath }${product.imagePath}">
+						</a>
+					</div>
+					<div class='wrap-info'>
+						<strong class='name'>
+							<a href="${pageContext.servletContext.contextPath}/product/${product.no}?${params.queryString}">${product.name}</a>
+							<c:if test="${product.isNew == true}">
+									<img src="${pageContext.servletContext.contextPath }/assets/images/i_new.gif" align="absmiddle" vspace="1">
+								</c:if> <c:if test="${product.isHit == true}">
+									<img src="${pageContext.servletContext.contextPath }/assets/images/i_hit.gif" align="absmiddl" vspace="1">
+								</c:if> <c:if test="${product.isSale == true}">
+									<img src="${pageContext.servletContext.contextPath }/assets/images/i_sale.gif" align="absmiddle" vspace="1">
+								</c:if>
+							</strong>
+						
+						<div>
+						<ul>
+							<li class="description">
+							${product.description}
+							</li>
+							<li class="sale-price">
+							<c:choose>
+							<c:when test="${product.isSale == true}">
+							<b><fmt:formatNumber value="${product.price * (1-product.discountRate/100)}" pattern="#,###"/> 원</b> 
+							</c:when>
+							<c:otherwise><b><fmt:formatNumber value="${product.price}" pattern="#,###"/> 원</b></c:otherwise>
+							</c:choose>
+							</li>
+							<li class="price">
+							<c:if test="${product.isSale == true}">
+							<fmt:formatNumber value="${product.price}" pattern="#,###"/> 원
+							</c:if>
+							</li>
+						</ul>
+						</div>
+					</div>
+				</li>
+				</c:forEach>
+			</ul>
+		</div>
+</div>
+
+<%-- 
 <table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr><td height="10" colspan="2"></td></tr>
 	<tr>
@@ -313,8 +388,7 @@
 	</tr>
 </table>
 <br><br>
+  --%>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
-&nbsp
-
 </body>
 </html>
