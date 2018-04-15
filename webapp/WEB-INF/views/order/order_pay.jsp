@@ -19,27 +19,23 @@
 			getCartCookieValue();
 		})
 	</script>
-</head>
-<body style="margin:0">
-<jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr><td height="10" colspan="2"></td></tr>
-	<tr>
-		<td height="100%" valign="top">
-			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		</td>
-		<td width="10"></td>
-		<td valign="top">
-		
-<!-------------------------------------------------------------------------------------------->	
-<!-- 시작 : 다른 웹페이지 삽입할 부분                                                       -->
-<!-------------------------------------------------------------------------------------------->	
-
-			<!--  현재 페이지 자바스크립  -------------------------------------------->
-			<script language="javascript">
-
-			function Check_Value() 
+	<!--  현재 페이지 자바스크립  -------------------------------------------->
+	<script>
+	$(function(){
+		getCartCookieValue();
+		$("#btn-order-submit").click(function(){
+			alert("제풀");
+			let jsonStr = ObjToJsonArrStr(".form-product");
+		    console.log(jsonStr);
+		    let $form = $('#form-order');
+			let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
+			
+			$form.append(data);
+		    $form.submit();
+		});
+	});
+	
+		function Check_Value() 
 			{
 				if (form2.pay_method[0].checked)
 				{
@@ -81,7 +77,7 @@
 				form2.submit();
 			}
 
-			function PaySel(n) 
+		function PaySel(n) 
 			{
 				if (n == 0) {
 					form2.card_kind.disabled = false;
@@ -109,7 +105,25 @@
 				}
 			}
 
-			</script>
+	</script>
+</head>
+<body style="margin:0">
+<jsp:include page="/WEB-INF/views/include/head.jsp"/>
+<div id = "wrapper">
+<c:forEach items="${orderItems}" var="item" varStatus="stat">
+			<form class="form-product" data-value="${stat.index}">
+				<input type="hidden" name="productNo" value="${item.productNo}">
+				<input type="hidden" name="quantity" value="${item.quantity}">
+				<input type="hidden" name="price" value="${item.quantity *  item.price}">
+				<input type="hidden" name="optionNo1" value="${item.optionNo1}"/>
+				<input type="hidden" name="optionNo2" value="${item.optionNo2}"/>
+			</form>
+</c:forEach>
+<!-------------------------------------------------------------------------------------------->	
+<!-- 시작 : 다른 웹페이지 삽입할 부분                                                       -->
+<!-------------------------------------------------------------------------------------------->	
+
+			
 
 			<table border="0" cellpadding="0" cellspacing="0" width="747">
 				<tr><td height="13"></td></tr>
@@ -191,22 +205,20 @@
 			<br><br>
 
 			<!-- form2 시작  -->
-			<form name="form2" method="post"action="order_ok.jsp">
+			<form id = "form-order" name="form2" method="post" action="${pageContext.servletContext.contextPath}/order/submit">
 
-			<input type="hidden" name="o_name"   value="홍길동">
-			<input type="hidden" name="o_tel"    value="02-111-1111">
-			<input type="hidden" name="o_phone"  value="010-222-2222">
-			<input type="hidden" name="o_email"  value="aaa@aa.aa.aa">
-			<input type="hidden" name="o_zip"    value="111-111">
-			<input type="hidden" name="o_addr"   value="서울 서초구 서초대로 74길 33 비트빌딩">
-
-			<input type="hidden" name="r_name"   value="홍길동">
-			<input type="hidden" name="r_tel"    value="02-111-1111">
-			<input type="hidden" name="r_phone"  value="010-222-2222">
-			<input type="hidden" name="r_email"  value="aaa@aa.aa.aa">
-			<input type="hidden" name="r_zip"    value="111-111">
-			<input type="hidden" name="r_addr"   value="서울 서초구 서초대로 74길 33 비트빌딩">
-			<input type="hidden" name="o_etc"    value="빠른 배송 부탁.">
+			<input type="hidden" name="ordererName"   value="${order.ordererName }">
+			<input type="hidden" name="ordererPhone1"    value="${order.ordererPhone1 }">
+			<input type="hidden" name="ordererPhone2"  value="${order.ordererPhone2 }">
+			<input type="hidden" name="ordererEmail"  value="${order.ordererEmail }">
+			<input type="hidden" name="ordererAddr"    value="${order.ordererAddr }">
+			
+			<input type="hidden" name="recipientName"   value="${order.recipientName }">
+			<input type="hidden" name="recipientPhone1"    value="${order.recipientPhone1 }">
+			<input type="hidden" name="recipientPhone2"  value="${order.recipientPhone2 }">
+			<input type="hidden" name="recipientEmail"  value="${order.recipientEmail }">
+			<input type="hidden" name="recipientAddr"    value="${order.recipientAddr }">
+			
 
 			<!-- 결재방법 선택 및 입력 -->
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
@@ -348,7 +360,8 @@
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr>
 					<td align="center">
-						<img src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif" onclick="Check_Value()" style="cursor:hand">
+						<%-- <img id="btn-order-submit" src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif" style="cursor:hand"> --%>
+						<button id = "btn-order-submit" type="button">결제하기</button>
 					</td>
 				</tr>
 				<tr height="20"><td></td></tr>
@@ -357,11 +370,7 @@
 <!-------------------------------------------------------------------------------------------->	
 <!-- 끝 : 다른 웹페이지 삽입할 부분                                                         -->
 <!-------------------------------------------------------------------------------------------->	
-
-		</td>
-	</tr>
-</table>
-<br><br>
+</div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

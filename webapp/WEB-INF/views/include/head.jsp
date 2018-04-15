@@ -16,6 +16,8 @@
 			<div class="info">
 				<img src="${pageContext.servletContext.contextPath }/assets/images/info_icon.png">
 				&nbsp;
+				<c:choose>
+				<c:when test="${empty authMember}">
 				<ul class="info-list" style="display: none;">
 					<li><a href="${pageContext.servletContext.contextPath }/member/login" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGIN
 					</a></li>
@@ -26,6 +28,17 @@
 					<li></li>
 					<li></li>
 				</ul>
+				</c:when>
+				<c:otherwise>
+				<ul class="info-list" style="display: none;">
+					<li><a href="${pageContext.servletContext.contextPath }/member/logout" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGOUT
+					</a></li>
+					<li><a href="/myshop/index.html" class="xans-element- xans-layout xans-layout-statelogoff log ">MY PAGE </a></li>
+					<li></li>
+					<li></li>
+				</ul>
+				</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="bag">
 				<img src="${pageContext.servletContext.contextPath }/assets/images/bag_icon.png">

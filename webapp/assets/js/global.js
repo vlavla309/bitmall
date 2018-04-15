@@ -27,13 +27,13 @@ let formToObject = function(item){
 	let optionNo2 = $("[name=optionNo2]",item).val();
 	
 	let quantity = $("[name=quantity]",item).val();
-	
+	/*
 	console.log("productNo:"+productNo);
 	console.log("price:"+price);
 	console.log("optionNo1:"+optionNo1);
 	console.log("optionNo2:"+optionNo2);
 	console.log("quantity:"+quantity);
-	
+	*/
 	let orderItem={};
 	orderItem.productNo=productNo;
 	orderItem.price=price;

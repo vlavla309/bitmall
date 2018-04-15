@@ -17,11 +17,50 @@
 	<script type="text/javascript">
 		$(function(){
 			getCartCookieValue();
+			$("#btn-order-submit").click(function(){
+				let jsonStr = ObjToJsonArrStr(".form-product");
+			    console.log(jsonStr);
+			    let $form = $('#form-order');
+
+			    const ordererPhone1 = $("input[name=o_tel1]" ).val() + $("input[name=o_tel2]" ).val() + $("input[name=o_tel3]" ).val();
+			    const ordererPhone2 = $("input[name=o_phone1]" ).val() + $("input[name=o_phone2]" ).val() + $("input[name=o_phone3]" ).val();
+			    const ordererAddr = $("input[name=o_zip1]" ).val() + $("input[name=o_zip2]" ).val() + $("input[name=o_juso]" ).val();
+			    const recipientPhone1 = $("input[name=r_tel1]" ).val() + $("input[name=r_tel2]" ).val() + $("input[name=r_tel3]" ).val();
+			    const recipientPhone2 = $("input[name=r_phone1]" ).val() + $("input[name=r_phone2]" ).val() + $("input[name=r_phone3]" ).val();
+			    const recipientAddr = $("input[name=r_zip1]" ).val() + $("input[name=r_zip2]" ).val() + $("input[name=r_juso]" ).val();
+				
+			   
+				
+			    console.log("주문자 정보");
+				console.log(ordererPhone1);
+				console.log(ordererPhone2);
+				console.log(ordererAddr);
+				console.log("수령인 정보");
+				console.log(recipientPhone1);
+				console.log(recipientPhone2);
+				console.log(recipientAddr);
+				
+				const input_ordererPhone1 = $("<input type='hidden' value="+ordererPhone1+" name='ordererPhone1'>");
+				const input_ordererPhone2 = $("<input type='hidden' value="+ordererPhone2+" name='ordererPhone2'>");
+				const input_ordererAddr = $("<input type='hidden' value="+ordererAddr+" name='ordererAddr'>");
+				
+				const input_recipientPhone1 = $("<input type='hidden' value="+recipientPhone1+" name='recipientPhone1'>");
+				const input_recipientPhone2 = $("<input type='hidden' value="+recipientPhone2+" name='recipientPhone2'>");
+				const input_recipientAddr = $("<input type='hidden' value="+recipientAddr+" name='recipientAddr'>");
+				
+				let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
+				
+				
+				
+				$form.append(input_ordererPhone1).append(input_ordererPhone2).append(input_ordererAddr).append(input_recipientPhone1).append(input_recipientPhone2).append(input_recipientAddr).append(data);
+			    $form.submit();
+			});
+			
 		})
 
 			function Check_Value() {
-				if (!form2.o_name.value) {
-					alert("주문자 이름이 잘 못 되었습니다.");	form2.o_name.focus();	return;
+				if (!form2.ordererName.value) {
+					alert("주문자 이름이 잘 못 되었습니다.");	form2.ordererName.focus();	return;
 				}
 				if (!form2.o_tel1.value || !form2.o_tel2.value || !form2.o_tel3.value) {
 					alert("전화번호가 잘 못 되었습니다.");	form2.o_tel1.focus();	return;
@@ -29,18 +68,18 @@
 				if (!form2.o_phone1.value || !form2.o_phone2.value || !form2.o_phone3.value) {
 					alert("핸드폰이 잘 못 되었습니다.");	form2.o_phone1.focus();	return;
 				}
-				if (!form2.o_email.value) {
-					alert("이메일이 잘 못 되었습니다.");	form2.o_email.focus();	return;
+				if (!form2.ordererEmail.value) {
+					alert("이메일이 잘 못 되었습니다.");	form2.ordererEmail.focus();	return;
 				}
 				if (!form2.o_zip1.value || !form2.o_zip2.value) {
 					alert("우편번호가 잘 못 되었습니다.");	form2.o_zip1.focus();	return;
 				}
 				if (!form2.o_juso.value) {
-					alert("주소가 잘 못 되었습니다.");	form2.o_email.focus();	return;
+					alert("주소가 잘 못 되었습니다.");	form2.ordererEmail.focus();	return;
 				}
 
-				if (!form2.r_name.value) {
-					alert("받으실 분의 이름이 잘 못 되었습니다.");	form2.r_name.focus();	return;
+				if (!form2.recipientName.value) {
+					alert("받으실 분의 이름이 잘 못 되었습니다.");	form2.recipientName.focus();	return;
 				}
 				if (!form2.r_tel1.value || !form2.r_tel2.value || !form2.r_tel3.value) {
 					alert("전화번호가 잘 못 되었습니다.");	form2.r_tel1.focus();	return;
@@ -48,14 +87,14 @@
 				if (!form2.r_phone1.value || !form2.r_phone2.value || !form2.r_phone3.value) {
 					alert("핸드폰이 잘 못 되었습니다.");	form2.r_phone1.focus();	return;
 				}
-				if (!form2.r_email.value) {
-					alert("이메일이 잘 못 되었습니다.");	form2.r_email.focus();	return;
+				if (!form2.recipientEmail.value) {
+					alert("이메일이 잘 못 되었습니다.");	form2.recipientEmail.focus();	return;
 				}
 				if (!form2.r_zip1.value || !form2.r_zip2.value) {
 					alert("우편번호가 잘 못 되었습니다.");	form2.r_zip1.focus();	return;
 				}
 				if (!form2.r_juso.value) {
-					alert("주소가 잘 못 되었습니다.");	form2.r_email.focus();	return;
+					alert("주소가 잘 못 되었습니다.");	form2.recipientEmail.focus();	return;
 				}
 
 				form2.submit();
@@ -68,7 +107,7 @@
 
 			function SameCopy(str) {
 				if (str == "Y") {
-					form2.r_name.value = form2.o_name.value;
+					form2.recipientName.value = form2.ordererName.value;
 					form2.r_zip1.value = form2.o_zip1.value;
 					form2.r_zip2.value = form2.o_zip2.value;
 					form2.r_juso.value = form2.o_juso.value;
@@ -78,10 +117,10 @@
 					form2.r_phone1.value = form2.o_phone1.value;
 					form2.r_phone2.value = form2.o_phone2.value;
 					form2.r_phone3.value = form2.o_phone3.value;
-					form2.r_email.value = form2.o_email.value;
+					form2.recipientEmail.value = form2.ordererEmail.value;
 				}
 				else {
-					form2.r_name.value = "";
+					form2.recipientName.value = "";
 					form2.r_zip1.value = "";
 					form2.r_zip2.value = "";
 					form2.r_juso.value = "";
@@ -91,7 +130,7 @@
 					form2.r_phone1.value = "";
 					form2.r_phone2.value = "";
 					form2.r_phone3.value = "";
-					form2.r_email.value = "";
+					form2.recipientEmail.value = "";
 				}
 			}
 
@@ -100,6 +139,15 @@
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
 <div id="wrapper">
+<c:forEach items="${orderItems}" var="item" varStatus="stat">
+			<form class="form-product" data-value="${stat.index}">
+				<input type="hidden" name="productNo" value="${item.productNo}">
+				<input type="hidden" name="quantity" value="${item.quantity}">
+				<input type="hidden" name="price" value="${item.quantity *  item.price}">
+				<input type="hidden" name="optionNo1" value="${item.optionNo1}"/>
+				<input type="hidden" name="optionNo2" value="${item.optionNo2}"/>
+			</form>
+</c:forEach>
 <table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr><td height="10" colspan="2"></td></tr>
 	<tr>
@@ -139,7 +187,6 @@
 				</tr>
 				
 				<c:forEach items="${orderItems}" var="orderItem" >
-				<form>
 					<tr bgcolor="#FFFFFF">
 					<td height="60" align="center">
 						<table cellpadding="0" cellspacing="0" width="100%">
@@ -159,7 +206,6 @@
 					<td align="center"><font color="#464646"><fmt:formatNumber value="${orderItem.price }" pattern="#,###"/></font> 원</td>
 					<td align="center"><font color="#464646"><fmt:formatNumber value="${orderItem.quantity *  orderItem.price}" pattern="#,###"/></font> 원</td>
 				</tr>
-				</form>
 				</c:forEach>
 				
 				<tr>
@@ -183,7 +229,7 @@
 			</table>
 
 			<!-- form2 시작  -->
-			<form name="form2" method="post" action="order_pay.jsp">
+			<form id="form-order" name="form2" method="post" action="${pageContext.servletContext.contextPath}/order/pay">
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr>
 					<td align="left" valign="top" width="150" STYLE="padding-left:45;padding-top:5">
@@ -196,8 +242,7 @@
 								<td width="150"><b>주문자 성명</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="hidden" name="o_no" value="">
-									<input type="text"   name="o_name" size="20" maxlength="10" value="" class="cmfont1">
+									<input type="text"   name="ordererName" size="20" maxlength="10" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
@@ -222,17 +267,17 @@
 								<td width="150"><b>E-Mail</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_email" size="50" maxlength="50" value="" class="cmfont1">
+									<input type="text" name="ordererEmail" size="50" maxlength="50" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="50">
 								<td width="150"><b>주소</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_zip1" size="3" maxlength="3" value="" class="cmfont1" readonly> -
-									<input type="text" name="o_zip2" size="3" maxlength="3" value="" class="cmfont1" readonly>
+									<input type="text" name="o_zip1" size="3" maxlength="3" value="" class="cmfont1" > -
+									<input type="text" name="o_zip2" size="3" maxlength="3" value="" class="cmfont1" >
 									<a href="javascript:FindZip(1)"><img src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" align="absmiddle" border="0"></a> <br>
-									<input type="text" name="o_juso" size="50" maxlength="200" value="" class="cmfont1" readonly><br>
+									<input type="text" name="o_juso" size="50" maxlength="200" value="" class="cmfont1" ><br>
 								</td>
 							</tr>
 						</table>
@@ -266,7 +311,7 @@
 								<td width="150"><b>받으실 분 성명</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_name" size="20" maxlength="10" value="" class="cmfont1">
+									<input type="text" name="recipientName" size="20" maxlength="10" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
@@ -291,17 +336,17 @@
 								<td width="150"><b>E-Mail</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_email" size="50" maxlength="50" value="" class="cmfont1">
+									<input type="text" name="recipientEmail" size="50" maxlength="50" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="50">
 								<td width="150"><b>주소</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_zip1" size="3" maxlength="3" value="" class="cmfont1" readonly> -
-									<input type="text" name="r_zip2" size="3" maxlength="3" value="" class="cmfont1" readonly>
+									<input type="text" name="r_zip1" size="3" maxlength="3" value="" class="cmfont1" > -
+									<input type="text" name="r_zip2" size="3" maxlength="3" value="" class="cmfont1" >
 									<a href="javascript:FindZip(2)"><img src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" align="absmiddle" border="0"></a> <br>
-									<input type="text" name="r_juso" size="50" maxlength="200" value="" class="cmfont1" readonly><br>
+									<input type="text" name="r_juso" size="50" maxlength="200" value="" class="cmfont1" ><br>
 								</td>
 							</tr>
 							<tr height="50">
@@ -327,6 +372,8 @@
 				<tr>
 					<td align="center">
 						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif">
+						
+						<button type="button" id="btn-order-submit">진행</button>
 					</td>
 				</tr>
 				<tr height="20"><td></td></tr>

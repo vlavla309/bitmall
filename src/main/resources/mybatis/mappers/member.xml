@@ -7,9 +7,8 @@
 	<![CDATA[
 		SELECT no,
 		name,
-		gender 
-		FROM users 
-		WHERE email = #{email}  
+		FROM member 
+		WHERE id = #{id}  
 		AND password = password(#{password})
 	]]>
 	</select>

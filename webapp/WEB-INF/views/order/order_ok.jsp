@@ -74,6 +74,7 @@
 												<font color="898989">저희 쇼핑몰의 상품을 주문해주셔서  대단히 감사합니다.<br><br><br>
 												저희 쇼핑몰은 항상 최선을 다할 것을 약속 드립니다.<br><br><br><br><br>
 												즐거운 쇼핑이 되시길 바랍니다.</font><br><br><br>
+												<span>주문 번호 : <strong>${orderCode }</strong></span>
 											</td>
 										</tr>
 									</table>

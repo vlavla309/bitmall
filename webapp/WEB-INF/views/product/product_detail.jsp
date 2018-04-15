@@ -28,7 +28,7 @@
 				
 				let $form = $('<form></form>');
 				let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
-				$form.attr('action', '${pageContext.servletContext.contextPath}/order/add').attr('method', 'get').appendTo('body').append(data);
+				$form.attr('action', '${pageContext.servletContext.contextPath}/order/add').attr('method', 'POST').appendTo('body').append(data);
 			    $form.submit();
 			});
 			

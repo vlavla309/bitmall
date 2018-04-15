@@ -10,6 +10,7 @@ public class OrderVo {
 	private String ordererPhone1;
 	private String ordererPhone2;
 	private String ordererEmail;
+	private String ordererAddr;
 	private String recipientName;
 	private String recipientPhone1;
 	private String recipientPhone2;
@@ -21,6 +22,12 @@ public class OrderVo {
 	private List<OrderItemVo> orderItems;
 	public long getNo() {
 		return no;
+	}
+	public String getOrdererAddr() {
+		return ordererAddr;
+	}
+	public void setOrdererAddr(String ordererAddr) {
+		this.ordererAddr = ordererAddr;
 	}
 	public void setNo(long no) {
 		this.no = no;
@@ -119,9 +126,9 @@ public class OrderVo {
 	public String toString() {
 		return "OrderVo [no=" + no + ", orderCode=" + orderCode + ", totalPrice=" + totalPrice + ", ordererName="
 				+ ordererName + ", ordererPhone1=" + ordererPhone1 + ", ordererPhone2=" + ordererPhone2
-				+ ", ordererEmail=" + ordererEmail + ", recipientName=" + recipientName + ", recipientPhone1="
-				+ recipientPhone1 + ", recipientPhone2=" + recipientPhone2 + ", recipientEmail=" + recipientEmail
-				+ ", recipientAddr=" + recipientAddr + ", requirement=" + requirement + ", regDate=" + regDate
-				+ ", memberNo=" + memberNo + ", orderItems=" + orderItems + "]";
+				+ ", ordererEmail=" + ordererEmail + ", ordererAddr=" + ordererAddr + ", recipientName=" + recipientName
+				+ ", recipientPhone1=" + recipientPhone1 + ", recipientPhone2=" + recipientPhone2 + ", recipientEmail="
+				+ recipientEmail + ", recipientAddr=" + recipientAddr + ", requirement=" + requirement + ", regDate="
+				+ regDate + ", memberNo=" + memberNo + ", orderItems=" + orderItems + "]";
 	}
 }

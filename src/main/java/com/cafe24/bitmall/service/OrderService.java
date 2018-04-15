@@ -42,7 +42,14 @@ public class OrderService {
 	}
 
 	public void addOrder(OrderVo order, String jsonStr) {
+		System.out.println(jsonStr);
+		System.out.println(order);
 		
+		String orderCode = makeOrderCode();
+		order.setOrderCode(orderCode);
+		jsonToOrderItemList(jsonStr);
+		
+		//System.out.println(order);
 	}
 	
 	private String makeOrderCode() {

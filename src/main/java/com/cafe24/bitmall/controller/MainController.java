@@ -15,14 +15,11 @@ public class MainController {
 	
 	@Autowired
 	private ProductService productServ;
-	@Autowired
-	private CategoryService categoryServ;
 	
 	@RequestMapping( "" )
 	public String index(Model model, ProductParam params) {
 		params.setSort("new");
 		model.addAllAttributes(productServ.getProductListByParam(params, PRODUCT_PER_PAGE, 1));
-		model.addAllAttributes(categoryServ.getCategories());
 		return "main/index";
 	}
 }
