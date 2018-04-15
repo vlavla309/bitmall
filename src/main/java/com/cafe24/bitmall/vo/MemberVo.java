@@ -8,6 +8,7 @@ public class MemberVo {
 	private String birthDate;
 	private String phone1;
 	private String phone2;
+	private String zipCode;
 	private String address;
 	private String email;
 	private String type;
@@ -78,10 +79,16 @@ public class MemberVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 	@Override
 	public String toString() {
-		return "Member [no=" + no + ", id=" + id + ", password=" + password + ", name=" + name + ", birthDate="
-				+ birthDate + ", phone1=" + phone1 + ", phone2=" + phone2 + ", address=" + address + ", email=" + email
-				+ ", type=" + type + ", regDate=" + regDate + "]";
+		return "MemberVo [no=" + no + ", id=" + id + ", password=" + password + ", name=" + name + ", birthDate="
+				+ birthDate + ", phone1=" + phone1 + ", phone2=" + phone2 + ", zipCode=" + zipCode + ", address="
+				+ address + ", email=" + email + ", type=" + type + ", regDate=" + regDate + "]";
 	}
 }

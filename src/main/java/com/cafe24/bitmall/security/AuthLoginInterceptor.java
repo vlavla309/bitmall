@@ -30,16 +30,12 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("password:"+password);
 		
 		
-		MemberVo vo = new MemberVo();
-		vo.setId(id);
-		vo.setPassword(password);
-		
 		ApplicationContext ac = 
 		WebApplicationContextUtils.
 		getWebApplicationContext(request.getServletContext());
 		
 		MemberService memberService = ac.getBean(MemberService.class);
-		MemberVo authMember = memberService.getMember(vo);
+		MemberVo authMember = memberService.getAuthMember(id, password);
 		
 		if(authMember == null) {
 			response.sendRedirect( request.getContextPath() + "/member/login" );
@@ -47,7 +43,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		HttpSession session = request.getSession(true);
-		session.setAttribute( "authMember", "있음" );
+		session.setAttribute( "authMember", authMember);
 		response.sendRedirect( request.getContextPath() );
 		
 		return false;

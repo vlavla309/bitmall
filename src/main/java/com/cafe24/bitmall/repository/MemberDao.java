@@ -20,9 +20,6 @@ public class MemberDao {
 		return sqlSession.selectOne("member.getByNo", no);
 	}
 	
-	public MemberVo get(MemberVo vo) {
-		return sqlSession.selectOne("member.getByVo", vo);
-	}
 	
 	public MemberVo get(String id, String password) {
 		Map<String, String> map = new HashMap<>();
