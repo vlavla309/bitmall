@@ -13,9 +13,6 @@ import com.cafe24.bitmall.vo.MemberVo;
 
 public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 
-	//@Autowired
-	//private UserService userService;
-	
 	@Override
 	public boolean preHandle(
 		HttpServletRequest request,
@@ -25,14 +22,12 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		String id = request.getParameter( "id" );
 		String password = request.getParameter( "password" );
-		
+		/*	
 		System.out.println("id:"+id);
 		System.out.println("password:"+password);
+		*/
 		
-		
-		ApplicationContext ac = 
-		WebApplicationContextUtils.
-		getWebApplicationContext(request.getServletContext());
+		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
 		
 		MemberService memberService = ac.getBean(MemberService.class);
 		MemberVo authMember = memberService.getAuthMember(id, password);

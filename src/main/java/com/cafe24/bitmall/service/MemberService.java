@@ -1,5 +1,8 @@
 package com.cafe24.bitmall.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +15,10 @@ public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
 	
-	public MemberVo getMember(Long no) {
-		return null;
+	public Map<String, Object> getModifyMember(Long no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("member", memberDao.get(no));
+		return map;
 	}
 	
 	public MemberVo getAuthMember(String id, String password) {

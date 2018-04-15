@@ -24,10 +24,10 @@
 
 			    const ordererPhone1 = $("input[name=o_tel1]" ).val() + $("input[name=o_tel2]" ).val() + $("input[name=o_tel3]" ).val();
 			    const ordererPhone2 = $("input[name=o_phone1]" ).val() + $("input[name=o_phone2]" ).val() + $("input[name=o_phone3]" ).val();
-			    const ordererAddr = $("input[name=o_zip1]" ).val() + $("input[name=o_zip2]" ).val() + $("input[name=o_juso]" ).val();
+			    const ordererAddr = $("input[name=o_zipCode]" ).val() + ":" + $("input[name=o_juso]" ).val();
 			    const recipientPhone1 = $("input[name=r_tel1]" ).val() + $("input[name=r_tel2]" ).val() + $("input[name=r_tel3]" ).val();
 			    const recipientPhone2 = $("input[name=r_phone1]" ).val() + $("input[name=r_phone2]" ).val() + $("input[name=r_phone3]" ).val();
-			    const recipientAddr = $("input[name=r_zip1]" ).val() + $("input[name=r_zip2]" ).val() + $("input[name=r_juso]" ).val();
+			    const recipientAddr = $("input[name=r_zipCode]" ).val() + ":" + $("input[name=r_juso]" ).val();
 				
 			   
 				
@@ -71,7 +71,7 @@
 				if (!form2.ordererEmail.value) {
 					alert("이메일이 잘 못 되었습니다.");	form2.ordererEmail.focus();	return;
 				}
-				if (!form2.o_zip1.value || !form2.o_zip2.value) {
+				if (!form2.o_zipCode.value) {
 					alert("우편번호가 잘 못 되었습니다.");	form2.o_zip1.focus();	return;
 				}
 				if (!form2.o_juso.value) {
@@ -90,8 +90,8 @@
 				if (!form2.recipientEmail.value) {
 					alert("이메일이 잘 못 되었습니다.");	form2.recipientEmail.focus();	return;
 				}
-				if (!form2.r_zip1.value || !form2.r_zip2.value) {
-					alert("우편번호가 잘 못 되었습니다.");	form2.r_zip1.focus();	return;
+				if (!form2.r_zipCode.value || !form2.r_zip2.value) {
+					alert("우편번호가 잘 못 되었습니다.");	form2.r_zipCode.focus();	return;
 				}
 				if (!form2.r_juso.value) {
 					alert("주소가 잘 못 되었습니다.");	form2.recipientEmail.focus();	return;
@@ -108,8 +108,7 @@
 			function SameCopy(str) {
 				if (str == "Y") {
 					form2.recipientName.value = form2.ordererName.value;
-					form2.r_zip1.value = form2.o_zip1.value;
-					form2.r_zip2.value = form2.o_zip2.value;
+					form2.r_zipCode.value = form2.o_zipCode.value;
 					form2.r_juso.value = form2.o_juso.value;
 					form2.r_tel1.value = form2.o_tel1.value;
 					form2.r_tel2.value = form2.o_tel2.value;
@@ -121,8 +120,7 @@
 				}
 				else {
 					form2.recipientName.value = "";
-					form2.r_zip1.value = "";
-					form2.r_zip2.value = "";
+					form2.r_zipCode.value = "";
 					form2.r_juso.value = "";
 					form2.r_tel1.value = "";
 					form2.r_tel2.value = "";
@@ -195,9 +193,9 @@
 									<a href="${pageContext.servletContext.contextPath }/product/${orderItem.productNo}"><img src="${pageContext.servletContext.contextPath }${orderItem.product.imagePath}" width="50" height="50" border="0"></a>
 								</td>
 								<td class="cmfont">
-									<a href="product_detail.jsp?no=0000"><font color="#0066CC">${orderItem.product.name}</font></a><br>
-									<c:if test="${orderItem.optionNo1 != 0}">[${orderItem.option1.parentName}]</font> ${orderItem.option1.name} </c:if>
-									<c:if test="${orderItem.optionNo2 != 0}">[${orderItem.option2.parentName}]</font> ${orderItem.option2.name} </c:if>
+									<a href="${pageContext.servletContext.contextPath }/product/${orderItem.productNo}"><font color="#0066CC">${orderItem.product.name}</font></a><br>
+									<c:if test="${orderItem.optionNo1 != 0}"><font>[${orderItem.option1.parentName}]</font> ${orderItem.option1.name} </c:if>
+									<c:if test="${orderItem.optionNo2 != 0}"><font>[${orderItem.option2.parentName}]</font> ${orderItem.option2.name} </c:if>
 								</td>
 							</tr>
 						</table>
@@ -230,6 +228,7 @@
 
 			<!-- form2 시작  -->
 			<form id="form-order" name="form2" method="post" action="${pageContext.servletContext.contextPath}/order/pay">
+			<input type="hidden" name="memberNo" value="${member.no}"/>
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr>
 					<td align="left" valign="top" width="150" STYLE="padding-left:45;padding-top:5">
@@ -242,42 +241,43 @@
 								<td width="150"><b>주문자 성명</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text"   name="ordererName" size="20" maxlength="10" value="" class="cmfont1">
+									<input type="text"  name="ordererName" size="20" maxlength="10" value="${member.name }" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>전화번호</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_tel1" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_tel2" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_tel3" size="4" maxlength="4" value="" class="cmfont1">
+									<c:set var="phone1" value="${fn:split(member.phone1,'-')}" />
+									<input type="number" name='o_tel1' size = "4" maxlength = "4" value = "${phone1[0] }" class="cmfont1">-
+									<input type="number" name='o_tel2' size = "4" maxlength = "4" value = "${phone1[1] }" class="cmfont1">-
+									<input type="number" name='o_tel3' size = "4" maxlength = "4" value = "${phone1[2] }" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>휴대폰번호</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_phone1" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_phone2" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_phone3" size="4" maxlength="4" value="" class="cmfont1">
+									<c:set var="phone2" value="${fn:split(member.phone2,'-')}" />
+									<input type="number" name='o_phone1' size = "4" maxlength = "4" value = "${phone1[0] }" class="cmfont1">-
+									<input type="number" name='o_phone2' size = "4" maxlength = "4" value = "${phone1[1] }" class="cmfont1">-
+									<input type="number" name='o_phone3' size = "4" maxlength = "4" value = "${phone1[2] }" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>E-Mail</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="ordererEmail" size="50" maxlength="50" value="" class="cmfont1">
+									<input type="text" name="ordererEmail" size="50" maxlength="50" value="${member.email }" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="50">
 								<td width="150"><b>주소</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_zip1" size="3" maxlength="3" value="" class="cmfont1" > -
-									<input type="text" name="o_zip2" size="3" maxlength="3" value="" class="cmfont1" >
+									<input type="text" name="o_zipCode" size="3" maxlength="3" value=${member.zipCode }"" class="cmfont1" >
 									<a href="javascript:FindZip(1)"><img src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" align="absmiddle" border="0"></a> <br>
-									<input type="text" name="o_juso" size="50" maxlength="200" value="" class="cmfont1" ><br>
+									<input type="text" name="o_juso" size="50" maxlength="200" value="${member.address }" class="cmfont1" ><br>
 								</td>
 							</tr>
 						</table>
@@ -343,8 +343,7 @@
 								<td width="150"><b>주소</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_zip1" size="3" maxlength="3" value="" class="cmfont1" > -
-									<input type="text" name="r_zip2" size="3" maxlength="3" value="" class="cmfont1" >
+									<input type="text" name="r_zipCode" size="3" maxlength="5" value="" class="cmfont1" >
 									<a href="javascript:FindZip(2)"><img src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" align="absmiddle" border="0"></a> <br>
 									<input type="text" name="r_juso" size="50" maxlength="200" value="" class="cmfont1" ><br>
 								</td>
@@ -371,9 +370,7 @@
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr>
 					<td align="center">
-						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif">
-						
-						<button type="button" id="btn-order-submit">진행</button>
+						<input id="btn-order-submit" type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif">
 					</td>
 				</tr>
 				<tr height="20"><td></td></tr>

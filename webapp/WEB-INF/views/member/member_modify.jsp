@@ -7,18 +7,17 @@
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/global.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/product.css" rel="stylesheet" type="text/css">
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/global.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/cart.js"></script>
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr><td height="10" colspan="2"></td></tr>
-	<tr>
-		<td height="100%" valign="top">
-			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		</td>
-		<td width="10"></td>
-		<td valign="top">
+<div id="wrapper">
 
 		<!-------------------------------------------------------------------------------------------->	
 		<!-- 시작 : 다른 웹페이지 삽입할 부분                                                                                                                                                            -->
@@ -40,7 +39,7 @@
 				<tr><td height="10"></td></tr>
 			</table>
 
-			<form name="form2" method="post" action="/user/member_modifying/${authUser.no }">
+			<form name="form2" method="post" action="${pageContext.servletContext.contextPath }/member/modify">
 			<table border="0" cellpadding="5" cellspacing="1" width="685" bgcolor="cccccc">
 				<tr>
 					<td align="center" bgcolor="efefef">
@@ -53,7 +52,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>아이디</b></font>
 											</td>
 											<td>
-												<input type="text" name="id" maxlength = "12" value="${vo.id }" size="20" class="cmfont1"> 
+												<input type="text" name="id" maxlength = "12" value="${member.id }" size="20" class="cmfont1"> 
 												<a href="javascript:check_id();"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_idcheck.gif" border="0"></a>
 											</td>
 										</tr>
@@ -62,7 +61,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>비밀번호</b></font>
 											</td>
 											<td>
-												<input TYPE="password" name="password1" maxlength = "10" size="20" class="cmfont1">
+												<input TYPE="password" name="password" maxlength = "10" size="20" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -83,7 +82,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>이 름</b></font>
 											</td>
 											<td>
-												<input type="text" name="name" maxlength = "10" value = "${vo.name }" size="20" class="cmfont1">
+												<input type="text" name="name" maxlength = "10" value = "${member.name }" size="20" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -91,11 +90,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>생년월일</b></font>
 											</td>
 											<td>
-												<input type="text" name='birthday1' size = "4" maxlength = "4" value = "${birthday1 }" class="cmfont1"> <font color="898989">년</font> 
-												<input type="text" name='birthday2' size = "2" maxlength = "2" value = "${birthday2 }" class="cmfont1"> <font color="898989">월</font> 
-												<input type="text" name='birthday3' size = "2" maxlength = "2" value = "${birthday3 }" class="cmfont1"> <font color="898989">일</font> 
-												<!-- <input type="radio" name='sm' value = "1" checked> <font color="898989">양력</font> 
-												<input type="radio" name='sm' value = "2" > <font color="898989">음력</font></td> -->
+												<input type="date" name='birthDate' size = "4" maxlength = "4" value = "${member.birthDate }" class="cmfont1"> <font color="898989">년</font> 
 										</tr>
 										<tr><td colspan="2" height="10"></td></tr>
 										<tr><td colspan="2" bgcolor="E6DDD5"></td></tr>
@@ -106,10 +101,11 @@
 											<td width="127" height="30">
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>전화 번호</b></font>
 											</td>
-											<td>
-												<input type="text" name='tel1' size = "4" maxlength = "4" value = "${tel1 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='tel2' size = "4" maxlength = "4" value = "${tel2 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='tel3' size = "4" maxlength = "4" value = "${tel3 }" class="cmfont1">
+											<td> 
+												<c:set var="phone1" value="${fn:split(member.phone1,'-')}" />
+												<input type="text" name='tel1' size = "4" maxlength = "4" value = "${phone1[0] }" class="cmfont1"><font color="898989">-</font>
+												<input type="text" name='tel2' size = "4" maxlength = "4" value = "${phone1[1] }" class="cmfont1"><font color="898989">-</font>
+												<input type="text" name='tel3' size = "4" maxlength = "4" value = "${phone1[2] }" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -117,9 +113,10 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>핸드폰 번호</b></font>
 											</td>
 											<td>
-												<input type="text" name='phone1' size = "4" maxlength = "4" value = "${phone1 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='phone2' size = "4" maxlength = "4" value = "${phone2 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='phone3' size = "4" maxlength = "4" value = "${phone3 }" class="cmfont1">
+												<c:set var="phone2" value="${fn:split(member.phone2,'-')}" />
+												<input type="text" name='cell1' size = "4" maxlength = "4" value = "${phone2[0] }" class="cmfont1"><font color="898989">-</font>
+												<input type="text" name='cell2' size = "4" maxlength = "4" value = "${phone2[1] }" class="cmfont1"><font color="898989">-</font>
+												<input type="text" name='cell3' size = "4" maxlength = "4" value = "${phone2[2] }" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -127,10 +124,9 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>주 소</b></font>
 											</td>
 											<td>
-												<input type="text" name='zip1' size = "4" maxlength = "3" value = "762" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='zip2' size = "4" maxlength = "3" value = "634" class="cmfont1"> 
+												<input type="number" name='zipCode' size = "4" maxlength = "5" value = "${member.zipCode }" class="cmfont1">
 												<a href="javascript:FindZip(0)"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" border="0"></a><br>
-												<input type="text" name='address' size = "50" maxlength = "200" value = "${vo.address }" class="cmfont1"><br>
+												<input type="text" name='address' size = "50" maxlength = "200" value = "${member.address }" class="cmfont1"><br>
 											</td>
 										</tr>
 										<tr>
@@ -138,7 +134,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>E-Mail</b></font>
 											</td>
 											<td>
-												<input type="text" name='email' size = "50" maxlength = "50" value = "${vo.email }" class="cmfont1">
+												<input type="text" name='email' size = "50" maxlength = "50" value = "${member.email }" class="cmfont1">
 											</td>
 										</tr>
 									</table>
@@ -162,11 +158,7 @@
 		<!-------------------------------------------------------------------------------------------->	
 		<!-- 끝 : 다른 웹페이지 삽입할 부분                                                                                                                                                              -->
 		<!-------------------------------------------------------------------------------------------->	
-
-		</td>
-	</tr>
-</table>
-<br><br>
+</div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

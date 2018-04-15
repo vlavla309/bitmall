@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
@@ -9,13 +11,42 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<!-- Message Converter -->
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+		<!-- argument resolver -->
+		<mvc:argument-resolvers>
+			<bean
+				class="com.cafe24.bitmall.security.AuthMemberHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
-	
+
 	<!-- the mvc resources tag does the magic -->
-	<mvc:resources mapping="/assets/uploads/**" location="file:/bitmall/uploads/" />
+	<mvc:resources mapping="/assets/uploads/**"
+		location="file:/bitmall/uploads/" />
+
+
+
 
 	<!-- 기본 뷰 리졸버 -->
 	<bean id="viewResolver"
@@ -26,7 +57,7 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
-	
+
 	<!-- 멀티파트 리졸버 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -60,7 +91,7 @@
 			<mvc:exclude-mapping path="/assets/**" />
 			<bean class="com.cafe24.bitmall.security.AuthInterceptor" />
 		</mvc:interceptor>
-		
+
 		<!-- 카테고리 인터셉터 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -74,6 +105,7 @@
 
 	<!-- annotation config -->
 	<context:annotation-config />
-	<context:component-scan base-package="com.cafe24.bitmall.controller,com.cafe24.bitmall.admin.controller,com.cafe24.bitmall.api.controller" />
+	<context:component-scan
+		base-package="com.cafe24.bitmall.controller,com.cafe24.bitmall.admin.controller,com.cafe24.bitmall.api.controller" />
 
 </beans>

@@ -2,9 +2,12 @@
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cafe24.bitmall.security.Auth;
+import com.cafe24.bitmall.security.AuthMember;
 import com.cafe24.bitmall.service.MemberService;
 import com.cafe24.bitmall.vo.MemberVo;
 
@@ -36,4 +39,14 @@ public class MemberController {
 	public String login() {
 		return "member/member_login";
 	}
+	
+	@Auth
+	@RequestMapping(value = "/modify", method=RequestMethod.GET )
+	public String modifyForm(
+			Model model, 
+			@AuthMember MemberVo authMember) {
+		model.addAllAttributes(memberServ.getModifyMember(authMember.getNo()));
+		return "member/member_modify";
+	}
+	
 }

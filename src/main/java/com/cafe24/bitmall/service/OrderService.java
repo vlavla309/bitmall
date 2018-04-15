@@ -9,8 +9,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.bitmall.repository.MemberDao;
 import com.cafe24.bitmall.repository.OptionDao;
 import com.cafe24.bitmall.repository.ProductDao;
+import com.cafe24.bitmall.vo.MemberVo;
 import com.cafe24.bitmall.vo.OrderItemVo;
 import com.cafe24.bitmall.vo.OrderVo;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -24,9 +26,12 @@ public class OrderService {
 	private ProductDao productDao;	
 	
 	@Autowired
+	private MemberDao memberDao;	
+	
+	@Autowired
 	private OptionDao optionDao;	
 
-	public Map<String, Object> getOrderFormInfo(String jsonStr){
+	public Map<String, Object> getOrderFormInfo(String jsonStr, MemberVo authMember){
 		Map<String, Object> map = new  HashMap<>();
 		
 		List<OrderItemVo> orderItems= jsonToOrderItemList(jsonStr);
@@ -37,6 +42,11 @@ public class OrderService {
 			orderItemVo.setOption1(optionDao.get(orderItemVo.getOptionNo1()));
 			orderItemVo.setOption2(optionDao.get(orderItemVo.getOptionNo2()));
 		}
+		MemberVo member = null;
+		if(authMember != null) {
+			member = memberDao.get(authMember.getNo());
+		}
+		map.put("member", member);
 		map.put("orderItems", orderItems);
 		return map;
 	}
