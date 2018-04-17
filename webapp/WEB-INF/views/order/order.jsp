@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>비트닷컴 쇼핑몰</title>
@@ -22,16 +23,7 @@
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr><td height="10" colspan="2"></td></tr>
-	<tr>
-		<td height="100%" valign="top">
-			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		</td>
-		<td width="10"></td>
-		<td valign="top">
-
+<div id="wrapper"><div class="wrap-content">
 <!-------------------------------------------------------------------------------------------->	
 <!-- 시작 : 다른 웹페이지 삽입할 부분                                                       -->
 <!-------------------------------------------------------------------------------------------->	
@@ -50,7 +42,7 @@
 				<tr><td height="10"></td></tr>
 			</table>
 
-			<table border="0" cellpadding="0" cellspacing="0" width="685" class="cmfont">
+			<table border="0" cellpadding="0" cellspacing="0" width="920" class="cmfont">
 				<tr><td colspan="5" height="3" bgcolor="#0066CC"></td></tr>
 				<tr bgcolor="F2F2F2">
 					<td width="80" height="30" align="center">주문일</td>
@@ -60,55 +52,47 @@
 					<td width="115" align="center">주문상태</td>
 				</tr>
 				<tr><td colspan="5" bgcolor="DEDCDD"></td></tr>
-
+				<c:forEach items="${orders}" var="order">
 				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-02</font></td>
+					<td height="30" align="center"><font color="686868">${order.regDate}</font></td>
 					<td align="center">
-						<a href="jumun_info.jsp?no=13&page=1"><font color="#0066CC">200701020001</font></a>
+						<a href="${pageContext.servletContext.contextPath }/order/${order.code}"><font color="#0066CC">${order.code}</font></a>
 					</td>
-					<td><font color="686868">파란 브라우스 (외 2)</font></td>
+					<td><font color="686868">${order.orderItems[0].name} 
+						<c:if test="${order.orderItems.size() > 1}">&nbsp;&nbsp;외 ${order.orderItems.size()-1}</c:if>
+					</font></td>
 					<td align="right"><font color="686868">20,000 원</font></td>
-					<td align="center"><font color="#0066CC">주문신청</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-01</font></td>
 					<td align="center">
-						<a href="jumun_info.jsp?no=10&page=1"><font color="#0066CC">200701010011</font></a>
+						
+						<font color="
+						<c:choose>
+							<c:when test="${order.status=='submit' }">#0066CC</c:when>
+							<c:when test="${order.status=='confirm' }">#0066CC</c:when>
+							<c:when test="${order.status=='payment' }">#0066CC</c:when>
+							<c:when test="${order.status=='shipping' }">#0066CC</c:when>
+							<c:when test="${order.status=='done' }">#686868</c:when>
+							<c:when test="${order.status=='cancel' }">#D06404</c:when>
+						</c:choose>
+						
+						">
+						
+						<c:choose>
+							<c:when test="${order.status=='submit' }">주문신청</c:when>
+							<c:when test="${order.status=='confirm' }">주문확인</c:when>
+							<c:when test="${order.status=='payment' }">입금확인</c:when>
+							<c:when test="${order.status=='shipping' }">배송중</c:when>
+							<c:when test="${order.status=='done' }">주문완료</c:when>
+							<c:when test="${order.status=='cancel' }">주문취소</c:when>
+						</c:choose>
+						</font>
 					</td>
-					<td><font color="686868">하얀 브라우스 (외 1)</font></td>
-					<td align="right"><font color="686868">30,000 원</font></td>
-					<td align="center"><font color="#0066CC">배송중</font></td>
 				</tr>
 				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-01</font></td>
-					<td align="center">
-						<a href="jumun_info.jsp?no=4&page=1"><font color="#0066CC">200701010005</font></a>
-					</td>
-					<td><font color="686868">파란 브라우스 (외 1)</font></td>
-					<td align="right"><font color="686868">30,000 원</font></td>
-					<td align="center"><font color="#D06404">주문취소</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-01</font></td>
-					<td align="center">
-						<a href="jumun_info.jsp?no=1&page=1"><font color="#0066CC">200701010001</font></a>
-					</td>
-					<td><font color="686868">실크 브라우스</font></td>
-					<td align="right"><font color="686868">30,000 원</font></td>
-					<td align="center"><font color="#686868">주문완료</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
+				</c:forEach>
 				<tr><td colspan="5" height="2" bgcolor="#0066CC"></td></tr>
 			</table>
 			<br>
-			<table border="0" cellpadding="0" cellspacing="0" width="690">
+		<%-- 	<table border="0" cellpadding="0" cellspacing="0" width="690">
 				<tr>
 					<td height="30" class="cmfont" align="center">
 						<img src="${pageContext.servletContext.contextPath }/assets/images/i_prev.gif" align="absmiddle" border="0"> 
@@ -118,15 +102,40 @@
 						<img src="${pageContext.servletContext.contextPath }/assets/images/i_next.gif" align="absmiddle" border="0">
 					</td>
 				</tr>
-			</table>
-
+			</table> --%>
+<div class="wrap-pagination">
+					<c:choose>
+					<c:when test="${pb.hasPreviousPagination}">
+						<a href="${pageContext.servletContext.contextPath}/member/order?pageNo=${pb.startPageNo-1}${params.shortQueryString}"><img src="${pageContext.servletContext.contextPath}/assets/images/btn_page_prev.gif" alt="이전페이지"/></a>
+					</c:when>
+					<c:otherwise>
+					<a ><img src="${pageContext.servletContext.contextPath}/assets/images/btn_page_prev.gif" alt="이전페이지"/></a>
+					</c:otherwise>
+					</c:choose>
+					<ol class="pagination">
+					<c:forEach begin="${pb.startPageNo}" end="${pb.endPageNo}" varStatus="stat">
+						<li>
+						<c:choose>
+							<c:when test="${stat.index == params.pageNo}"><a class="this">${stat.index}</a></c:when>
+							<c:when test="${stat.index > pb.countTotalPage}"><a class="deactive">${stat.index}</a></c:when>
+							<c:otherwise><a href="${pageContext.servletContext.contextPath}/member/order?pageNo=${stat.index}${params.shortQueryString}">${stat.index}</a></c:otherwise>
+						</c:choose>
+						</li>
+					</c:forEach>
+					</ol>
+					<c:choose>
+					<c:when test="${pb.hasNextPagination}">
+						<a href="${pageContext.servletContext.contextPath}/member/order?pageNo=${pb.endPageNo+1}${params.shortQueryString}"><img src="${pageContext.servletContext.contextPath}/assets/images/btn_page_next.gif" alt="이전페이지"/></a>
+					</c:when>
+					<c:otherwise>
+					<a ><img src="${pageContext.servletContext.contextPath}/assets/images/btn_page_next.gif" alt="이전페이지"/></a>
+					</c:otherwise>
+					</c:choose>
+</div>
 <!-------------------------------------------------------------------------------------------->	
 <!-- 끝 : 다른 웹페이지 삽입할 부분                                                         -->
 <!-------------------------------------------------------------------------------------------->	
-		</td>
-	</tr>
-</table>
-<br><br>
+	</div></div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

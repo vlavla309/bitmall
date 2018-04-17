@@ -144,59 +144,7 @@ div.wrap-info .price{
 	text-decoration: line-through;
 }
 
-/* Pagination */
-div.wrap-pagination{
-    margin:auto;
-    padding-top:1em;
-	clear:both;
-	text-align:center;
-	font-size: 0;
-}
-ol.pagination{
-	display: inline-block;
-    line-height: 0;
-    vertical-align: top;
-}
-ol.pagination li{
-	font-size:12px;
-	display:inline-block;
-	border: 1px solid #d7d5d5;
-	margin: 0 0 0 -1px;
-	color: #757575;
-    vertical-align: top;
-}
 
-ol.pagination li:first-child {
-    margin-left: 0;
-}
-
-ol.pagination li a{
-	display: block;
-	color: #495164;
-    width: 33px;
-    padding: 9px 0;
-    font-weight: bold;
-    orcolor: #939393;
-    line-height: 14px;
-    background: #fff;
-}
-
-ol.pagination li a.this{
-	padding-bottom: 6px;
-    border-bottom: 3px solid #495164;
-    color: #495164;
-}
-
-
-ol.pagination li a.deactive{
-	color: #939393;
-}
-ol.pagination li img{
-	border: none;
-	margin:0;
-	padding:0;
-	vertical-align: top;
-}
 
 
 /* --------------------Product Detail------------------------ */

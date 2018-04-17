@@ -9,6 +9,7 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/global.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/product.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/order.css" rel="stylesheet" type="text/css">
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -17,6 +18,12 @@
 	<script type="text/javascript">
 		$(function(){
 			getCartCookieValue();
+			
+			$(".btn-order-inquire").click(function(){
+				const orderCode = $("#orderCode").val();
+				console.log(orderCode);
+				location.href="${pageContext.servletContext.contextPath}/order/"+orderCode;
+			});
 		})
 	</script>
 </head>
@@ -59,7 +66,7 @@
 												<table border="0" cellpadding="0" cellspacing="0" width="320">
 													<!-- form2 시작 ------>
 													<form name = "form2" method = "post" action = "${pageContext.servletContext.contextPath }/member/auth">
-													<input type="hidden" name="returnURI" value=${returnURI }>
+													<input type="hidden" name="returnURI" value="${pageContext.servletContext.contextPath }/member/order">
 													<tr>
 														<td width="220" height="25">
 															<p style="padding-left:10px;">
@@ -105,13 +112,33 @@
 											</td>
 										</tr>
 									</table>
+									<table border="0" cellpadding="0" cellspacing="0" width="512">
+										<tr><td height="15"></td></tr>
+										<tr><td height="2" bgcolor="E9E9E9"></td></tr>
+										<tr><td height="15"></td></tr>
+									</table>
+									
+									<table border="0" height="120" cellpadding="0" cellspacing="0" width="440">
+										<tr>
+											<td style="text-align: center;">
+												<h1>비회원 주문조회</h1>
+											</td>
+										</tr>
+										<tr>
+											<td style="text-align: center;">
+												<p> <strong>주문번호</strong> <input type="text" id="orderCode" name="code" size="20" maxlength="30" class="cmfont1"><button class="btn-order-inquire">조회하기</button></p>
+											</td>
+										</tr>
+									</table>
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 			</table>
-		
+			
+			
+			
 		<!-------------------------------------------------------------------------------------------->	
 		<!-- 끝 : 다른 웹페이지 삽입할 부분                                                                                                                                                              -->
 		<!-------------------------------------------------------------------------------------------->	

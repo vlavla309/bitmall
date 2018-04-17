@@ -14,6 +14,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/global.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/cart.js"></script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			getCartCookieValue();
@@ -28,12 +29,18 @@
 				const $form= $("#form-member").append(inputPhone1).append(inputPhone2);
 				$form.submit();
 			});
-		})
-	</script>
+			
+			$(".btn-post").click(function(evt){
+				postCode($("#zipCode"), $("#addr"));
+			});
+		
+})
+</script>
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
 <div id ="wrapper">
+<div class="wrap-content">
 		<!-------------------------------------------------------------------------------------------->	
 		<!-- 시작 : 다른 웹페이지 삽입할 부분                                                                                                                                                            -->
 		<!-------------------------------------------------------------------------------------------->	
@@ -138,9 +145,9 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>주 소</b></font>
 											</td>
 											<td>
-												<input type="text" name='zipCode' size = "4" maxlength = "5" value = "" class="cmfont1"><font color="898989">-</font>
-												<a href="javascript:FindZip(0)"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" border="0"></a><br>
-												<input type="text" name='address' size = "50" maxlength = "200" value = "" class="cmfont1"><br>
+												<input type="text" id="zipCode" name='zipCode' size = "4" maxlength = "5" value = "" class="cmfont1"><font color="898989">-</font>
+												<a class="btn-post" href="#"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" border="0"></a><br>
+												<input type="text" id="addr" name='address' size = "50" maxlength = "200" value = "" class="cmfont1"><br>
 											</td>
 										</tr>
 										<tr>
@@ -173,6 +180,7 @@
 		<!-------------------------------------------------------------------------------------------->	
 		<!-- 끝 : 다른 웹페이지 삽입할 부분                                                                                                                                                              -->
 		<!-------------------------------------------------------------------------------------------->	
+		</div>
 </div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>

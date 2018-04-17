@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order_item">
+<select id="getByNo" resultType="orderitemvo" parameterType="long">
+	<![CDATA[
+		SELECT a.no, 
+       		   a.name,
+       		   a.status,
+       		   a.parent_no as 'parentNo',
+       		   b.name as 'parentName'
+		FROM   options a
+		LEFT JOIN options b ON a.parent_no = b.no
+		WHERE a.no = #{no}
+	]]>
+</select>
+
+	
+<select id="getListByOrderCode" resultType="orderitemvo"  parameterType="string">
+	<![CDATA[
+SELECT o.no, 
+       o.order_code AS 'orderCode', 
+       o.price, 
+       o.quantity,
+       o.option_no1 as 'optionNo1',
+       o.option_no2 as 'optionNo2',
+       o.quantity, 
+       p.no         AS 'productNo', 
+       p.name       AS 'name' 
+FROM   order_item o, 
+       product p 
+WHERE  o.product_no = p.no 
+       AND order_code = #{orderCode}; 
+	]]>
+</select>
+
+<insert id="insert" parameterType="orderitemvo">
+	<![CDATA[
+INSERT INTO order_item 
+            (order_code, 
+             product_no, 
+             price, 
+             quantity, 
+             option_no1, 
+             option_no2) 
+VALUES      (#{orderCode}, 
+             #{productNo}, 
+             (SELECT price 
+              FROM   product 
+              WHERE  no = #{productNo}), 
+             #{quantity},
+     ]]>
+     <choose>
+     	<when test="optionNo1 == 0">null,</when>
+     	<otherwise>#{optionNo1},</otherwise>
+     </choose>
+     <choose>
+     	<when test="optionNo2 == 0">null</when>
+     	<otherwise>#{optionNo2}</otherwise>
+     </choose>
+     )  
+</insert>
+
+<update id="update" parameterType="orderitemvo">
+	<![CDATA[
+		UPDATE options 
+		SET    name = #{name}, status = ${status}
+		WHERE  no = #{no}
+	]]>
+</update>
+
+</mapper>

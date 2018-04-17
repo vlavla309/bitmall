@@ -4,12 +4,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
-<TITLE> 비트닷컴 쇼핑몰</TITLE>
-<META HTTP-EQUIV="content-type" content="text/html; charset=utf-8">
+	<title>쇼핑몰 관리자 홈페이지</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/admin.css" rel="stylesheet" type="text/css">
 </head>
+<body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<br>
+<jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
+<div id ="wrapper">
+	<div class="wrap-content">
 
-<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red" onLoad="focusIt()">
-<br><br><br><br><br><br><br><br><br><br>
 <input type="hidden" name="no" value="${authUser.no}">
 
 <form name="form1" action="/ad/product" method="post">
@@ -47,6 +52,6 @@
 	</tr>
 </table>
 
-</form>
+</form></div></div>
 </body>
 </html>

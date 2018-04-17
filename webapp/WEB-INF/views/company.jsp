@@ -22,16 +22,7 @@
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr><td height="10" colspan="2"></td></tr>
-	<tr>
-		<td height="100%" valign="top">
-			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		</td>
-		<td width="10"></td>
-		<td valign="top">
-
+<div id="wrapper"><div class="wrap-content">
 <!-------------------------------------------------------------------------------------------->	
 <!-- 시작 : 다른 웹페이지 삽입할 부분                                                       -->
 <!-------------------------------------------------------------------------------------------->	
@@ -92,11 +83,7 @@
 <!-------------------------------------------------------------------------------------------->	
 <!-- 끝 : 다른 웹페이지 삽입할 부분                                                         -->
 <!-------------------------------------------------------------------------------------------->	
-
-		</td>
-	</tr>
-</table>
-<br><br>
+</div></div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

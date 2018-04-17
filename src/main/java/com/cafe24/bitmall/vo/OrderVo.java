@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OrderVo {
 	private long no;
-	private String orderCode;
+	private String code;
 	private long totalPrice;
 	private String ordererName;
 	private String ordererPhone1;
@@ -18,25 +18,21 @@ public class OrderVo {
 	private String recipientAddr;
 	private String requirement;
 	private String regDate;
+	private String status;
+	private String paymentType;
 	private long memberNo;
 	private List<OrderItemVo> orderItems;
 	public long getNo() {
 		return no;
 	}
-	public String getOrdererAddr() {
-		return ordererAddr;
-	}
-	public void setOrdererAddr(String ordererAddr) {
-		this.ordererAddr = ordererAddr;
-	}
 	public void setNo(long no) {
 		this.no = no;
 	}
-	public String getOrderCode() {
-		return orderCode;
+	public String getCode() {
+		return code;
 	}
-	public void setOrderCode(String orderCode) {
-		this.orderCode = orderCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public long getTotalPrice() {
 		return totalPrice;
@@ -67,6 +63,12 @@ public class OrderVo {
 	}
 	public void setOrdererEmail(String ordererEmail) {
 		this.ordererEmail = ordererEmail;
+	}
+	public String getOrdererAddr() {
+		return ordererAddr;
+	}
+	public void setOrdererAddr(String ordererAddr) {
+		this.ordererAddr = ordererAddr;
 	}
 	public String getRecipientName() {
 		return recipientName;
@@ -110,11 +112,11 @@ public class OrderVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public List<OrderItemVo> getOrderItems() {
-		return orderItems;
+	public String getPaymentType() {
+		return paymentType;
 	}
-	public void setOrderItems(List<OrderItemVo> orderItems) {
-		this.orderItems = orderItems;
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 	public long getMemberNo() {
 		return memberNo;
@@ -122,13 +124,26 @@ public class OrderVo {
 	public void setMemberNo(long memberNo) {
 		this.memberNo = memberNo;
 	}
+	public List<OrderItemVo> getOrderItems() {
+		return orderItems;
+	}
+	public void setOrderItems(List<OrderItemVo> orderItems) {
+		this.orderItems = orderItems;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "OrderVo [no=" + no + ", orderCode=" + orderCode + ", totalPrice=" + totalPrice + ", ordererName="
-				+ ordererName + ", ordererPhone1=" + ordererPhone1 + ", ordererPhone2=" + ordererPhone2
-				+ ", ordererEmail=" + ordererEmail + ", ordererAddr=" + ordererAddr + ", recipientName=" + recipientName
+		return "OrderVo [no=" + no + ", code=" + code + ", totalPrice=" + totalPrice + ", ordererName=" + ordererName
+				+ ", ordererPhone1=" + ordererPhone1 + ", ordererPhone2=" + ordererPhone2 + ", ordererEmail="
+				+ ordererEmail + ", ordererAddr=" + ordererAddr + ", recipientName=" + recipientName
 				+ ", recipientPhone1=" + recipientPhone1 + ", recipientPhone2=" + recipientPhone2 + ", recipientEmail="
 				+ recipientEmail + ", recipientAddr=" + recipientAddr + ", requirement=" + requirement + ", regDate="
-				+ regDate + ", memberNo=" + memberNo + ", orderItems=" + orderItems + "]";
+				+ regDate + ", status=" + status + ", paymentType=" + paymentType + ", memberNo=" + memberNo
+				+ ", orderItems=" + orderItems + "]";
 	}
 }

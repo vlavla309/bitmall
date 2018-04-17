@@ -23,6 +23,9 @@
 	
 			$(".btn-buy").click(function(){
 				console.log("click:구매버튼");
+				if(!checkValue()){
+					return false;
+				}
 				
 				let jsonStr = ObjToJsonArrStr(".form-product");
 				
@@ -34,10 +37,40 @@
 			
 			$(".btn-add-cart").click(function(){
 				console.log("click:장바구니 추가");
+				if(!checkValue()){
+					return false;
+				}
 				addCart(formToObject($('.form-product')));
 				window.location.href="${pageContext.servletContext.contextPath}/cart"
 			})
 		});
+		
+		const checkValue = function(){
+			const optionVal1 = $("select[name=optionNo1]").val();
+			const optionVal2 = $("select[name=optionNo2]").val();
+			const quantityVal = $("input[name=quantity]").val();
+			/* 
+			console.log(optionVal1);
+			console.log(optionVal2);
+			console.log(quantityVal);
+			 */
+			if(optionVal1 == 0){
+				alert("옵션1을 선택하세요.");
+				return false;
+			}
+			
+			if(optionVal2 == 0){
+				alert("옵션2을 선택하세요.");
+				return false;
+			}
+			
+			if(quantityVal <= 0){
+				alert("구매 수량은 최소 한개 이상입니다.");
+				return false;
+			}
+			
+			return true;
+		}
 	</script>
 </head>
 <body style="margin:0">
@@ -105,7 +138,7 @@
 									<c:otherwise>
 										<c:if test="${product.optionNo1 != 0}">
 											<select name="optionNo1" class="cmfont1">
-												<option value="0">선택하세요</option>
+												<option value="0">${options1[0].parentName}</option>
 												<c:forEach items="${options1}" var="option">
 													<option value="${option.no}">${option.name}</option>
 												</c:forEach>
@@ -113,7 +146,7 @@
 										</c:if> &nbsp;
 										<c:if test="${product.optionNo2 != 0}">
 											<select name="optionNo2" class="cmfont1">
-												<option value="0">선택하세요</option>
+												<option value="0">${options2[0].parentName}</option>
 												<c:forEach items="${options2}" var="option">
 													<option value="${option.no}">${option.name}</option>
 												</c:forEach>
@@ -125,7 +158,7 @@
 							</li>
 							<li>
 								<strong>수량</strong>
-								<span><input type='number' name='quantity' value='1'/></span>
+								<span><input type='number' name='quantity' min="1" value='1'/></span>
 							</li>
 						</ol>
 						
@@ -150,8 +183,7 @@
 					<p><img class='image-product' src="${pageContext.servletContext.contextPath }${image.path}"></p>
 					</c:forEach>
 				</div>
-				
-				<a class="flag" name="delivery"></a>
+				<a class="flag" id="delivery"></a>
 				<div class="desc-title">
 					<ul>
 						<li><a href="#detail">Detail</a></li>

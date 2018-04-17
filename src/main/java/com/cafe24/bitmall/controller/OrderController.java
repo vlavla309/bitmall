@@ -12,6 +12,8 @@ import com.cafe24.bitmall.security.AuthMember;
 import com.cafe24.bitmall.service.OrderService;
 import com.cafe24.bitmall.vo.MemberVo;
 import com.cafe24.bitmall.vo.OrderVo;
+import com.cafe24.bitmall.vo.PaymentCardVo;
+import com.cafe24.bitmall.vo.PaymentDepositVo;
 
 @Controller
 @RequestMapping("/order")
@@ -25,9 +27,11 @@ public class OrderController {
 	public String addOrder(
 			Model model, 
 			@AuthMember MemberVo authMember,
-			@RequestParam("data") String jsonStr) {
+			@RequestParam("data") String jsonStr,
+			@RequestParam(value = "cart", required=false, defaultValue="") String cart) {
 		System.out.println(jsonStr);
 		model.addAllAttributes(orderServ.getOrderFormInfo(jsonStr, authMember));
+		model.addAttribute("cart", cart);
 		return "order/order_form";
 	}
 	
@@ -48,10 +52,15 @@ public class OrderController {
 	public String submitOrder(
 			Model model, 
 			@RequestParam("data") String jsonStr,
-			OrderVo order) {
+			OrderVo order,
+			PaymentCardVo card,
+			PaymentDepositVo deposit
+			) {
 		
-		orderServ.addOrder(order, jsonStr);
-		return "redirect:/order/done?code="+order.getOrderCode();
+		
+		orderServ.addOrder(order, jsonStr, card, deposit);
+		
+		return "redirect:/order/done?code="+order.getCode();
 	}
 	
 	@RequestMapping( value = "/done", method=RequestMethod.GET)
@@ -63,15 +72,19 @@ public class OrderController {
 		return "order/order_ok";
 	}
 	
-	@RequestMapping( value = "/", method=RequestMethod.GET)
-	public String orderList() {
-		return "order/order";
+	@RequestMapping( value = "", method=RequestMethod.GET)
+	public String orderList(@AuthMember MemberVo authMember) {
+		if(authMember != null) {
+			return "redirect:/member/order";
+		}
+		return "member/member_login_with_order";
 	}
 	
-	@RequestMapping( value = "/{orderNo}", method=RequestMethod.GET)
+	@RequestMapping( value = "/{orderCode}", method=RequestMethod.GET)
 	public String orderDetail(
 			Model model, 
-			@PathVariable("orderNo") Long orderNo) {
+			@PathVariable("orderCode") String orderCode) {
+		model.addAllAttributes(orderServ.getOrderDetail(orderCode));
 		return "order/order_info";
 	}
 }

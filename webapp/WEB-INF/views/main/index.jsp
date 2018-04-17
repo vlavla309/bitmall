@@ -26,6 +26,7 @@
 <div id="wrapper">
 	<div id = 'wrap-index-item'>
 		<ul>
+			<li><a href="${pageContext.servletContext.contextPath}/product"><img src = "${pageContext.servletContext.contextPath}/assets/images/main_item2.jpg"/></a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/product"><img src = "${pageContext.servletContext.contextPath}/assets/images/main_item1.jpg"/></a></li>
 			<li></li>
 			<li></li>

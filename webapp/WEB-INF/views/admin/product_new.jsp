@@ -7,9 +7,14 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/admin.css" rel="stylesheet" type="text/css">
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
+<jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
+<div id ="wrapper">
+	<div class="wrap-content">
+
 <form name="form1" action="${pageContext.servletContext.contextPath}/admin/product/add" method="post" enctype="multipart/form-data" >
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
@@ -76,9 +81,9 @@
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품상태</td>
     <td width="700" bgcolor="#F2F2F2">
-			<input type="radio" name="status" value="onSale" checked> 판매중
-			<input type="radio" name="status" value="notOnSale"> 판매중지
-			<input type="radio" name="status" value="soldOut"> 품절
+			<input type="radio" name="status" value="onsale" checked> 판매중
+			<input type="radio" name="status" value="nosale"> 판매중지
+			<input type="radio" name="status" value="soldout"> 품절
 		</td>
 	</tr>
 	<tr> 
@@ -109,5 +114,7 @@
 	</tr>
 </table>
 </form>
+</div>
+</div>
 </body>
 </html>

@@ -1,0 +1,112 @@
+* { -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box; 
+    padding:0;
+    margin:0;
+}
+
+a, a:hover, a:link, a:visited{
+	text-decoration: none;
+	color:#333;
+}
+
+ul, ol{
+	list-style: none;
+}
+
+img{
+	border: none;
+}
+
+
+div#header-wrapper{
+	max-width:-webkit-fit-content;
+	max-width:-moz-max-content;
+	display:table;
+	margin:0 auto;
+}
+
+
+/* wrapper */
+div#wrapper{
+	margin:0 auto;
+	margin-top:80px;
+	width:100%;
+	min-height:720px;
+}
+
+
+
+div.wrap-content{
+	max-width:-webkit-fit-content;
+	max-width:-moz-max-content;
+	display:table;  /* 익스플로러에서 컨텐츠에 맞게 영역 너비 조절 */
+	margin:0 auto;
+	padding-bottom:4em;
+}
+
+
+
+
+/* Pagination */
+div.wrap-pagination{
+    margin:auto;
+    padding-top:1em;
+	clear:both;
+	text-align:center;
+	font-size: 0;
+}
+ol.pagination{
+	display: inline-block;
+    line-height: 0;
+    vertical-align: top;
+}
+ol.pagination li{
+	font-size:12px;
+	display:inline-block;
+	border: 1px solid #d7d5d5;
+	margin: 0 0 0 -1px;
+	color: #757575;
+    vertical-align: top;
+}
+
+ol.pagination li:first-child {
+    margin-left: 0;
+}
+
+ol.pagination li a{
+	display: block;
+	color: #495164;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    orcolor: #939393;
+    line-height: 14px;
+    background: #fff;
+}
+
+ol.pagination li a.this{
+	padding-bottom: 6px;
+    border-bottom: 3px solid #495164;
+    color: #495164;
+}
+
+
+ol.pagination li a.deactive{
+	color: #939393;
+}
+ol.pagination li img{
+	border: none;
+	margin:0;
+	padding:0;
+	vertical-align: top;
+}
+
+
+
+
+a.ordercode, a.ordercode:link{
+	color:#00f;
+}

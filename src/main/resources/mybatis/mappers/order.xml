@@ -1,182 +1,189 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="product">
-	<select id="getByNo" resultType="productvo" parameterType="long">
+<mapper namespace="order">
+	<select id="getByOrderCode" resultType="ordervo" parameterType="string">
 	<![CDATA[
-SELECT a.no, 
-       a.code, 
-       a.name, 
-       a.brand, 
-       a.description, 
-       a.price, 
-       a.is_new        AS 'isNew', 
-       a.is_hit        AS 'isHit', 
-       a.is_sale       AS 'isSale', 
-       a.discount_rate AS 'discountRate', 
-       a.status, 
-       a.reg_date, 
-       a.option_no1    AS 'optionNo1', 
-       a.option_no2    AS 'optionNo2', 
-       a.category_no   AS 'categoryNo', 
-       b.path          AS 'imagePath' 
-FROM   product a, 
-       product_image b 
-WHERE  a.no = b.product_no 
-       AND a.no = #{productNo} 
-       AND b.order_no = 0; 
+	SELECT no, 
+    	   code, 
+    	   totalprice, 
+	       o_name as 'ordererName', 
+    	   o_phone1 as 'ordererPhone1', 
+		   o_phone2 as 'ordererPhone2', 
+	       o_email as 'ordererEmail',
+	       o_addr as 'ordererAddr', 
+ 		   r_name as 'recipientName', 
+ 	       r_phone1 as 'recipientPhone1', 
+	       r_phone2 as 'recipientPhone2', 
+	       r_email as 'recipientEmail', 
+	       r_addr as 'recipientAddr', 
+	       requirement, 
+	       status, 
+ 	       payment_type as 'paymentType', 
+    	   reg_date  as 'regDate',
+    	   member_no as 'memberNo'
+	FROM   orders 
+	WHERE  code = #{orderCode}; 
 	]]>
 	</select>
 	
-	<select id="getListByParam" resultType="productvo" parameterType="map">
-	<![CDATA[
+<select id="getListByParam" resultType="ordervo" parameterType="map">
 SELECT a.no, 
        a.code, 
-       a.name, 
-       a.brand, 
-       a.description, 
-       a.price, 
-       a.is_new        AS 'isNew', 
-       a.is_hit        AS 'isHit', 
-       a.is_sale       AS 'isSale', 
-       a.discount_rate AS 'discountRate', 
+       a.totalprice, 
+       a.o_name as 'ordererName', 
+       a.o_phone1 as 'ordererPhone1', 
+       a.o_phone2 as 'ordererPhone2', 
+       a.o_email as 'ordererEmail', 
+       a.o_addr as 'ordererAddr', 
+       a.r_name as 'recipientName', 
+       a.r_phone1 as 'recipientPhone1', 
+       a.r_phone2 as 'recipientPhone2', 
+       a.r_email as 'recipientEmail', 
+       a.r_addr as 'recipientAddr', 
+       a.requirement as 'requirement', 
        a.status, 
-       a.reg_date, 
-       a.option_no1    AS 'optionNo1', 
-       a.option_no2    AS 'optionNo2', 
-       a.category_no   AS 'categoryNo', 
-       b.path          AS 'imagePath' ,
-       if(a.is_sale, a.price*(1-a.discount_rate/100) ,a.price) as 'salePrice'
-FROM   product a
-LEFT JOIN product_image b ON a.no = b.product_no ]]>
+       a.payment_type as 'paymentType', 
+       a.member_no as 'memberNo', 
+       Date_format(a.reg_date, '%Y-%m-%d') as 'regDate' 
+FROM   orders a, 
+       order_item b, 
+       product c 
 <where>
-    (b.order_no = 0 OR b.order_no is null)
-    
-    <if test="params.categoryNo != 0">
-    	AND a.category_no = #{params.categoryNo}
-    </if>
-    
-    <choose>
-    	<when test="params.icon=='isNew'">
-    		AND a.is_new = true
-    	</when>
-    	<when test="params.icon=='isHit'">
-    		AND a.is_hit = true
-    	</when>
-    	<when test="params.icon=='isSale'">
-    		AND a.is_sale = true
-    	</when>
-    </choose>
-    <if test="params.status != null">
-    		AND a.status = #{params.status} 
-    </if>
-    <choose>
-    	<when test="params.searchType == 'name'">
-    		AND a.name LIKE #{params.searchValue}
-    	</when>
-    	<when test="params.searchType == 'code'">
+	a.code = b.order_code 
+	AND b.product_no = c.no 
+	<choose>
+		<when test="params.searchType == 'code'">
     		AND a.code LIKE #{params.searchValue}
     	</when>
-    </choose>
-</where> 
-<choose>
-<when test="params.sort == 'name'">
-	ORDER  BY a.name ASC
-</when>
-<when test="params.sort == 'lowest'">
-	ORDER  BY salePrice ASC
-</when>
-<when test="params.sort == 'highest'">
-	ORDER  BY salePrice DESC
-</when>
-<otherwise>ORDER  BY a.reg_date DESC</otherwise>
-</choose>
-LIMIT ${(params.pageNo-1) * productPerPage}, ${productPerPage}
+    	<when test="params.searchType == 'orderer'">
+    		AND a.o_name LIKE #{params.searchValue}
+    	</when>
+    	<when test="params.searchType == 'product'">
+    		AND c.name LIKE #{params.searchValue}
+    	</when>
+    	<when test="params.searchType == 'member'">
+    		AND a.member_no = #{params.searchValue}
+    	</when>
+	</choose>
+	<if test="params.status != 'all'">
+    <![CDATA[ AND a.status = #{params.status}]]>
+    </if>
+	<if test="params.beginDate != ''">
+    <![CDATA[ AND Date_format(a.reg_date, '%Y-%m-%d') >= #{params.beginDate}]]>
+    </if>
+    <if test="params.endDate != ''">
+    <![CDATA[ AND Date_format(a.reg_date, '%Y-%m-%d') <= #{params.endDate}]]>
+    </if>
+</where>
+GROUP  BY a.code 
+ORDER  BY a.reg_date DESC
+LIMIT ${(params.pageNo-1) * orderPerPage}, ${orderPerPage}
 </select>
 	
 <select id="getCountByParam" resultType="long" parameterType="map">
 <![CDATA[
-SELECT count(*)
-FROM   product a
-LEFT JOIN product_image b ON a.no = b.product_no ]]>
-<where>
-    (b.order_no = 0 OR b.order_no is null)
-    
-    <if test="params.categoryNo != 0">
-    	AND a.category_no = #{params.categoryNo}
-    </if>
-    
-    <choose>
-    	<when test="params.icon=='isNew'">
-    		AND a.is_new = true
-    	</when>
-    	<when test="params.icon=='isHit'">
-    		AND a.is_hit = true
-    	</when>
-    	<when test="params.icon=='isSale'">
-    		AND a.is_sale = true
-    	</when>
-    </choose>
-    <if test="params.status != null">
-    		AND a.status = #{params.status} 
-    </if>
-    <choose>
-    	<when test="params.searchType == 'name'">
-    		AND a.name LIKE #{params.searchValue}
-    	</when>
-    	<when test="params.searchType == 'code'">
+SELECT count(d.code)
+FROM(SELECT count(a.code) as 'code',
+	 Date_format(a.reg_date, '%Y-%m-%d') as 'regDate'
+	 FROM   orders a, 
+      		order_item b, 
+       		product c 
+]]>
+	<where>
+	a.code = b.order_code 
+	AND b.product_no = c.no 
+	<choose>
+		<when test="params.searchType == 'code'">
     		AND a.code LIKE #{params.searchValue}
     	</when>
-    </choose>
-</where> 
-
+    	<when test="params.searchType == 'orderer'">
+    		AND a.o_name LIKE #{params.searchValue}
+    	</when>
+    	<when test="params.searchType == 'product'">
+    		AND c.name LIKE #{params.searchValue}
+    	</when>
+    	<when test="params.searchType == 'member'">
+    		AND a.member_no = #{params.searchValue}
+    	</when>
+	</choose>
+	<if test="params.status != 'all'">
+    <![CDATA[ AND a.status = #{params.status}]]>
+    </if>
+	<if test="params.beginDate != ''">
+    <![CDATA[ AND Date_format(a.reg_date, '%Y-%m-%d') >= #{params.beginDate}]]>
+    </if>
+    <if test="params.endDate != ''">
+    <![CDATA[ AND Date_format(a.reg_date, '%Y-%m-%d') <= #{params.endDate}]]>
+    </if>
+</where>
+	GROUP  BY a.code 
+	ORDER  BY a.reg_date DESC) d
 </select>
 	
 
 	
-	<insert id ="insert" parameterType="productvo" >
+	<insert id ="insert" parameterType="ordervo" >
 		<selectKey order="AFTER" keyProperty="no" resultType="long">
 			SELECT last_insert_id()
 		</selectKey>
 	
 		<![CDATA[
-		INSERT INTO product 
+INSERT INTO orders 
             (code, 
-             name, 
-             brand, 
-             description, 
-             price, 
-             is_new, 
-             is_hit, 
-             is_sale, 
-             discount_rate, 
+             totalprice, 
+             o_name, 
+             o_phone1, 
+             o_phone2, 
+             o_email, 
+             o_addr, 
+             r_name, 
+             r_phone1, 
+             r_phone2, 
+             r_email, 
+             r_addr, 
+             requirement, 
              status, 
-             reg_date, 
-             option_no1, 
-             option_no2, 
-             category_no) 
-		VALUES (#{code}, 
-             #{name}, 
-             #{brand}, 
-             #{description}, 
-             #{price}, 
-             #{isNew}, 
-             #{isHit}, 
-             #{isSale}, 
-             #{discountRate}, 
-             #{status}, 
-             sysdate(),]]>
-     <choose>
-     	<when test="optionNo1 != 0">#{optionNo1},</when>
-     	<otherwise>NULL,</otherwise>
-     </choose> 
-     <choose>
-     	<when test="optionNo2 != 0">#{optionNo2},</when>
-     	<otherwise>NULL,</otherwise>
-     </choose>
-     <![CDATA[        
-             #{categoryNo}) 
-	]]>	
+             payment_type, 
+             member_no, 
+             reg_date) 
+VALUES      (#{code}, 
+             #{totalPrice}, 
+             #{ordererName}, 
+             #{ordererPhone1}, 
+             #{ordererPhone2}, 
+             #{ordererEmail}, 
+             #{ordererAddr}, 
+             #{recipientName}, 
+             #{recipientPhone1}, 
+             #{recipientPhone2}, 
+             #{recipientEmail}, 
+             #{recipientAddr}, 
+             #{requirement}, 
+             'submit', 
+             #{paymentType}, 
+             #{memberNo}, 
+             sysdate()) 
+             ]]>
 	</insert>
+	
+	<update id="update" parameterType="ordervo">
+	UPDATE orders 
+	SET    totalprice = #{totalPrice}, 
+    	   o_name = #{ordererName}, 
+	       o_phone1 = #{ordererPhone1}, 
+    	   o_phone2 = #{ordererPhone2}, 
+	       o_email = #{ordererEmail}, 
+	       o_addr = #{ordererAddr}, 
+	       r_name = #{recipientName}, 
+	       r_phone1 = #{recipientPhone1}, 
+	       r_phone2 = #{recipientPhone2}, 
+	       r_email = #{recipientEmail}, 
+	       r_addr = #{recipientAddr}, 
+	       requirement = #{requirement}, 
+	       status = #{status}, 
+	       payment_type = #{paymentType} 
+	WHERE  no = #{no}
+	</update>
 
 </mapper>

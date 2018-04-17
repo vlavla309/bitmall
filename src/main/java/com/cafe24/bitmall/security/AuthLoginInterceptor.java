@@ -22,6 +22,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		String id = request.getParameter( "id" );
 		String password = request.getParameter( "password" );
+		String returnURI = request.getParameter("returnURI");
 		/*	
 		System.out.println("id:"+id);
 		System.out.println("password:"+password);
@@ -39,7 +40,11 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session = request.getSession(true);
 		session.setAttribute( "authMember", authMember);
-		response.sendRedirect( request.getContextPath() );
+		if(returnURI==null || returnURI.equals("")) {
+			response.sendRedirect( request.getContextPath() );
+		}else {
+			response.sendRedirect( returnURI );
+		}
 		
 		return false;
 	}

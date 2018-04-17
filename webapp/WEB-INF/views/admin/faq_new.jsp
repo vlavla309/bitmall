@@ -7,11 +7,14 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/admin.css" rel="stylesheet" type="text/css">
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
-<hr width='900' size='3'>
+<div id ="wrapper">
+	<div class="wrap-content">
+
 <form name="form1" method="post" action="">
 <table width="600" border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black">
 	<tr> 
@@ -41,5 +44,6 @@
 	</tr>
 </table>
 </form>
+</div></div>
 </body>
 </html>

@@ -22,36 +22,12 @@
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr><td height="10" colspan="2"></td></tr>
-	<tr>
-		<td height="100%" valign="top">
-			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		</td>
-		<td width="10"></td>
-		<td valign="top">
+<div id="wrapper"><div class="wrap-content">
 
 <!-------------------------------------------------------------------------------------------->	
 <!-- 시작 : 다른 웹페이지 삽입할 부분                                                       -->
 <!-------------------------------------------------------------------------------------------->	
 
-			<table border="0" cellpadding="0" cellspacing="0" width="747">
-				<tr><td height="13"></td></tr>
-				<tr>
-					<td height="30" align="center">
-						<img src="${pageContext.servletContext.contextPath }/assets/images/order_title.gif" width="747" height="30" border="0">
-					</td>
-				</tr>
-				<tr><td height="13"></td></tr>
-			</table>
-			<table border="0" cellpadding="0" cellspacing="0" width="685" class="cmfont">
-				<tr>
-					<td><img src="${pageContext.servletContext.contextPath }/assets/images/order_title1.gif" border="0"></td>
-				</tr>
-				<tr><td height="15"></td></tr>
-			</table>
-			<br><br>
 			<table border="0" cellpadding="5" cellspacing="1" width="685" bgcolor="cccccc">
 				<tr>
 					<td align="center" bgcolor="efefef">
@@ -89,11 +65,7 @@
 <!-------------------------------------------------------------------------------------------->	
 <!-- 끝 : 다른 웹페이지 삽입할 부분                                                         -->
 <!-------------------------------------------------------------------------------------------->	
-
-		</td>
-	</tr>
-</table>
-<br><br>
+</div></div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

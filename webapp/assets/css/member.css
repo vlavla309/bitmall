@@ -1,0 +1,20 @@
+textarea[name=requirement]{
+	width:100%;
+	padding:14px;
+	height:120px;
+	resize: none;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input.phone{
+	width:54px;
+	
+}

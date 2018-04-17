@@ -21,7 +21,7 @@ import com.cafe24.bitmall.vo.ProductVo;
 
 @Service
 public class ProductService {
-	private static final int PRODUCT_PER_PAGE = 12;
+	private static final int PRODUCT_PER_PAGE = 2;
 	private static final int PAGINATION_PER_PAGE = 5;
 	
 	@Autowired
@@ -42,7 +42,7 @@ public class ProductService {
 		map.put("product", product);
 		map.put("productImages", productImgDao.getList(no));
 		map.put("options1", optionDao.getList(product.getOptionNo1()));
-		map.put("options", optionDao.getList(product.getOptionNo2()));
+		map.put("options2", optionDao.getList(product.getOptionNo2()));
 		return map;
 	}
 	

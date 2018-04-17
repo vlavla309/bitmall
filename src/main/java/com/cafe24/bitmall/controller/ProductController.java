@@ -24,7 +24,7 @@ public class ProductController {
 			ProductParam params
 			) {
 		
-		
+		System.out.println(params);
 		model.addAllAttributes(productServ.getProductListByParam(params));
 		return "product/product";
 	}

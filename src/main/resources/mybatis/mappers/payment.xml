@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="payment">
+<select id="getPaymentCardByOrderNo" resultType="paymentcardvo" parameterType="long">
+	<![CDATA[
+		SELECT no, 
+       		   card_type as 'cardType',
+       		   card_no as 'cardNo',
+       		   approve_no as 'approveNo',
+       		   payer,
+       		   installment,
+       		   order_no as 'orderNo'
+		FROM   payment_card
+		WHERE order_no = #{order_no}
+	]]>
+</select>
+<select id="getPaymentDepositByOrderNo" resultType="paymentdepositvo" parameterType="long">
+	<![CDATA[
+		SELECT no, 
+       		   account,
+       		   depositor,
+       		   order_no as 'orderNo'
+		FROM   payment_deposit
+		WHERE order_no = #{order_no}
+	]]>
+</select>
+
+<insert id="insertPaymentCard" parameterType="paymentcardvo">
+	<![CDATA[
+		INSERT INTO payment_card 
+            		(card_type, card_no, approve_no, payer, order_no, installment) 
+		VALUES      (#{cardType}, #{cardNo}, '123456789', #{payer},#{orderNo}, #{installment})
+	]]>
+</insert>
+<insert id="insertPaymentDeposit" parameterType="paymentdepositvo">
+	<![CDATA[
+		INSERT INTO payment_deposit 
+            		(account, depositor, order_no) 
+		VALUES      (#{account}, #{depositor}, #{orderNo})
+	]]>
+</insert>
+</mapper>

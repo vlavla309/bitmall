@@ -16,53 +16,49 @@
 			<div class="info">
 				<img src="${pageContext.servletContext.contextPath }/assets/images/info_icon.png">
 				&nbsp;
+				<ul class="info-list" style="display: none;">
 				<c:choose>
 				<c:when test="${empty authMember}">
-				<ul class="info-list" style="display: none;">
-					<li><a href="${pageContext.servletContext.contextPath }/member/login" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGIN
-					</a></li>
-					<li><a href="${pageContext.servletContext.contextPath }/member/join" class="xans-element- xans-layout xans-layout-statelogoff log ">JOIN
-					</a></li>
-					<li><a href="/myshop/index.html" class="xans-element- xans-layout xans-layout-statelogoff log ">MY PAGE </a></li>
-					<li><a href="/myshop/order/list.html" class="xans-element- xans-layout xans-layout-statelogoff log ">주문조회 </a></li>
+				
+					<li><a href="${pageContext.servletContext.contextPath }/member/login" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGIN</a></li>
+					<li><a href="${pageContext.servletContext.contextPath }/member/join" class="xans-element- xans-layout xans-layout-statelogoff log ">JOIN</a></li>
 					<li></li>
-					<li></li>
-				</ul>
+				
 				</c:when>
 				<c:otherwise>
-				<ul class="info-list" style="display: none;">
-					<li><a href="${pageContext.servletContext.contextPath }/member/logout" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGOUT
-					</a></li>
-					<li><a href="/myshop/index.html" class="xans-element- xans-layout xans-layout-statelogoff log ">MY PAGE </a></li>
+					<li><a href="${pageContext.servletContext.contextPath }/member/logout" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGOUT</a></li>
+					<li><a href="${pageContext.servletContext.contextPath }/member/modify" class="xans-element- xans-layout xans-layout-statelogoff log ">MY PAGE </a></li>
 					<li></li>
 					<li></li>
-				</ul>
 				</c:otherwise>
 				</c:choose>
+				</ul>
 			</div>
 			<div class="bag">
 				<img src="${pageContext.servletContext.contextPath }/assets/images/bag_icon.png">
 				&nbsp;
 				<ul class="info-list" style="display: none;">
-					<li><a href="${pageContext.servletContext.contextPath}/cart" class="xans-element- xans-layout xans-layout-statelogoff log ">CART </a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/cart" class="xans-element- xans-layout xans-layout-statelogoff log ">장바구니 </a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/order" class="xans-element- xans-layout xans-layout-statelogoff log ">주문조회 </a></li>
+					<li></li>
 				</ul>
 			</div>
 			<div class="search">
 				<img src="${pageContext.servletContext.contextPath }/assets/images/search_icon.png">
 				&nbsp;
-				<ul class="info-list" style="display: none;">
-					<form id="searchBarForm" name="" action="" method="get" enctype="">
+				<ul class="info-list search-bar" style="display: none;">
+					
 						<li class="xans-element- xans-layout xans-layout-searchheader ">
-							<!--
-                    $product_page=/product/detail.html
-                    $category_page=/product/list.html
-                -->
-							<fieldset class="key_rel">
+							<form id="searchBarForm" name="" action="${pageContext.servletContext.contextPath}/product" method="get" enctype="">
+							<fieldset>
+								<input type="hidden" name="searchType" value="name"> 	
 								<input id="keyword" name="searchValue" class="input-search" placeholder="SEARCH" value="" type="text">
+								<%-- <img class="btn-search" src="${pageContext.servletContext.contextPath }/assets/images/search_icon.png" alt="검색"/> --%>
 								<input type="image" class="btn-search" src="${pageContext.servletContext.contextPath }/assets/images/search_icon.png" alt="검색">
-							</fieldset>
+								</fieldset>
+							</form>
 						</li>
-					</form>
+					
 				</ul>
 			</div>
 		<!-- 메뉴  끝  -->
@@ -70,6 +66,7 @@
 	<div class="menu-left">
 			<div class="product">
 				<span><a href="${pageContext.servletContext.contextPath }/product">Product</a></span>
+				<br>&nbsp;
 				<ul class="category-list" style="display: none;">
 					<c:forEach items="${categories}" var="category">
 						<li><a href="${pageContext.servletContext.contextPath }/product?categoryNo=${category.no}">${category.name}</a></li>
@@ -77,14 +74,15 @@
 				</ul>
 			</div>
 			<div class="board">
-				<span>board</span>
+				<span><a>board</a></span>
+				<br>&nbsp;
 				<ul class="info-list" style="display: none;">
 					<li><a href="${pageContext.servletContext.contextPath}/board/faq" class="xans-element- xans-layout xans-layout-statelogoff log ">FAQ </a></li>
 					<li><a href="${pageContext.servletContext.contextPath}/board/qna" class="xans-element- xans-layout xans-layout-statelogoff log ">QNA </a></li>
 				</ul>
 			</div>
 			<div class="about">
-				<span>About</span>
+				<span><a href="${pageContext.servletContext.contextPath}/company">About</a></span>
 				<%-- <ul class="info-list" style="display: none;">
 					<li><a href="${pageContext.servletContext.contextPath}/cart" class="xans-element- xans-layout xans-layout-statelogoff log ">CART </a></li>
 				</ul> --%>

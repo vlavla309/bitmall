@@ -9,11 +9,13 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/global.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/product.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/order.css" rel="stylesheet" type="text/css">
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/global.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/cart.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/product.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			getCartCookieValue();
@@ -27,20 +29,28 @@
 			alert("제풀");
 			let jsonStr = ObjToJsonArrStr(".form-product");
 		    console.log(jsonStr);
+		    
+		    const cardNoVal = $("input[name=card_no1]").val()+"-"+$("input[name=card_no2]").val()+"-"+$("input[name=card_no3]").val()+"-"+$("input[name=card_no4]").val();
+		    
+		    
 		    let $form = $('#form-order');
-			let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
+		    
+		    let cardNo = $("<input type='hidden' value="+cardNoVal+" name='cardNo'>");
+		    let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
 			
-			$form.append(data);
+			$form.append(cardNo).append(data);
 		    $form.submit();
 		});
+		
+		setTotalPrice();
 	});
 	
 		function Check_Value() 
 			{
 				if (form2.pay_method[0].checked)
 				{
-					if (!form2.card_kind.value) {
-						alert("카드종류를 선택하세요.");	form2.card_kind.focus();	return;
+					if (!form2.cardType.value) {
+						alert("카드종류를 선택하세요.");	form2.cardType.focus();	return;
 					}
 					if (!form2.card_no1.value || form2.card_no1.value.length!=4) {
 						alert("카드번호를 입력하세요.");	form2.card_no1.focus();	return;
@@ -66,11 +76,11 @@
 				}
 				else
 				{
-					if (!form2.bank_kind.value) {
-						alert("입금할 은행을 선택하세요.");	form2.bank_kind.focus();	return;
+					if (!form2.account.value) {
+						alert("입금할 은행을 선택하세요.");	form2.account.focus();	return;
 					}
-					if (!form2.bank_sender.value) {
-						alert("입금자 이름을 입력하세요.");	form2.bank_sender.focus();	return;
+					if (!form2.depositor.value) {
+						alert("입금자 이름을 입력하세요.");	form2.depositor.focus();	return;
 					}
 				}
 				
@@ -80,7 +90,7 @@
 		function PaySel(n) 
 			{
 				if (n == 0) {
-					form2.card_kind.disabled = false;
+					form2.cardType.disabled = false;
 					form2.card_no1.disabled = false;
 					form2.card_no2.disabled = false;
 					form2.card_no3.disabled = false;
@@ -88,11 +98,11 @@
 					form2.card_year.disabled = false;
 					form2.card_month.disabled = false;
 					form2.card_pw.disabled = false;
-					form2.bank_kind.disabled = true;
-					form2.bank_sender.disabled = true;
+					form2.account.disabled = true;
+					form2.depositor.disabled = true;
 				}
 				else {
-					form2.card_kind.disabled = true;
+					form2.cardType.disabled = true;
 					form2.card_no1.disabled = true;
 					form2.card_no2.disabled = true;
 					form2.card_no3.disabled = true;
@@ -100,11 +110,10 @@
 					form2.card_year.disabled = true;
 					form2.card_month.disabled = true;
 					form2.card_pw.disabled = true;
-					form2.bank_kind.disabled = false;
-					form2.bank_sender.disabled = false;
+					form2.account.disabled = false;
+					form2.depositor.disabled = false;
 				}
 			}
-
 	</script>
 </head>
 <body style="margin:0">
@@ -114,7 +123,7 @@
 			<form class="form-product" data-value="${stat.index}">
 				<input type="hidden" name="productNo" value="${item.productNo}">
 				<input type="hidden" name="quantity" value="${item.quantity}">
-				<input type="hidden" name="price" value="${item.quantity *  item.price}">
+				<input type="hidden" name="price" value="${item.price}">
 				<input type="hidden" name="optionNo1" value="${item.optionNo1}"/>
 				<input type="hidden" name="optionNo2" value="${item.optionNo2}"/>
 			</form>
@@ -147,49 +156,34 @@
 					<td width="100" align="center">가격</td>
 					<td width="100" align="center">합계</td>
 				</tr>
-				<tr bgcolor="#FFFFFF">
+				<c:forEach items="${orderItems}" var="orderItem" >
+					<tr bgcolor="#FFFFFF">
 					<td height="60" align="center">
 						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td width="60">
-									<a href="product_detail.jsp?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
+									<a href="${pageContext.servletContext.contextPath }/product/${orderItem.productNo}"><img src="${pageContext.servletContext.contextPath }${orderItem.product.imagePath}" width="50" height="50" border="0"></a>
 								</td>
 								<td class="cmfont">
-									<a href="product_detail.jsp?no=0000"><font color="#0066CC">제품명1</font></a><br>
-									[옵션]</font> 옵션1
+									<a href="${pageContext.servletContext.contextPath }/product/${orderItem.productNo}"><font color="#0066CC">${orderItem.product.name}</font></a><br>
+									<c:if test="${orderItem.optionNo1 != 0}"><font>[${orderItem.option1.parentName}]</font> ${orderItem.option1.name} </c:if>
+									<c:if test="${orderItem.optionNo2 != 0}"><font>[${orderItem.option2.parentName}]</font> ${orderItem.option2.name} </c:if>
 								</td>
 							</tr>
 						</table>
 					</td>
-					<td align="center"><font color="#464646">1&nbsp개</font></td>
-					<td align="center"><font color="#464646">70,200</font> 원</td>
-					<td align="center"><font color="#464646">70,200</font> 원</td>
+					<td align="center"><font color="#464646">${orderItem.quantity }&nbsp개</font></td>
+					<td align="center"><font color="#464646"><fmt:formatNumber value="${orderItem.price }" pattern="#,###"/></font> 원</td>
+					<td align="center"><font color="#464646"><fmt:formatNumber value="${orderItem.quantity *  orderItem.price}" pattern="#,###"/></font> 원</td>
 				</tr>
-				<tr bgcolor="#FFFFFF">
-					<td height="60" align="center">
-						<table cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td width="60">
-									<a href="product_detail.jsp?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-								</td>
-								<td class="cmfont">
-									<a href="product_detail.jsp?no=0000"><font color="#0066CC">제품명2</font></a><br>
-									[옵션]</font> 옵션2
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td align="center"><font color="#464646">1&nbsp개</font></td>
-					<td align="center"><font color="#464646">60,000</font> 원</td>
-					<td align="center"><font color="#464646">60,000</font> 원</td>
-				</tr>
+				</c:forEach>
 				<tr>
 					<td colspan="5" bgcolor="#F0F0F0">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 							<tr>
 								<td bgcolor="#F0F0F0"><img src="${pageContext.servletContext.contextPath }/assets/images/cart_image1.gif" border="0"></td>
-								<td align="right" bgcolor="#F0F0F0">
-									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(132,000원) + 배송료(2,500원) = <font color="#FF3333"><b>134,500 원</b></font>&nbsp;&nbsp
+								<td align="right" bgcolor="#F0F0F0" id="td-totalPrice">
+									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(132,000원) + 배송료(2,500원) = <font color="#FF3333"><b>134,500 원</b></font>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</table>
@@ -206,7 +200,6 @@
 
 			<!-- form2 시작  -->
 			<form id = "form-order" name="form2" method="post" action="${pageContext.servletContext.contextPath}/order/submit">
-
 			<input type="hidden" name="ordererName"   value="${order.ordererName }">
 			<input type="hidden" name="ordererPhone1"    value="${order.ordererPhone1 }">
 			<input type="hidden" name="ordererPhone2"  value="${order.ordererPhone2 }">
@@ -218,6 +211,8 @@
 			<input type="hidden" name="recipientPhone2"  value="${order.recipientPhone2 }">
 			<input type="hidden" name="recipientEmail"  value="${order.recipientEmail }">
 			<input type="hidden" name="recipientAddr"    value="${order.recipientAddr }">
+			<input type="hidden" name="requirement"    value="${order.requirement }">
+			<input type="hidden" name="memberNo" value="${order.memberNo}"/>
 			
 
 			<!-- 결재방법 선택 및 입력 -->
@@ -236,8 +231,8 @@
 								<td width="150"><b>결재방법 선택</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="radio" name="pay_method" onclick="javascript:PaySel(0);" checked>카드 &nbsp;
-									<input type="radio" name="pay_method" onclick="javascript:PaySel(1);">무통장
+									<input type="radio" name="paymentType" onclick="javascript:PaySel(0);" checked value="card">카드 &nbsp;
+									<input type="radio" name="paymentType" onclick="javascript:PaySel(1);" value="deposit">무통장
 								</td>
 							</tr>
 						</table>
@@ -261,12 +256,12 @@
 								<td width="150"><b>카드종류</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<select name="card_kind" class="cmfont1">
+									<select name="cardType" class="cmfont1">
 										<option value="">카드종류를 선택하세요.</option>
-										<option value="1">국민카드</option>
-										<option value="2">신한카드</option>
-										<option value="3">우리카드</option>
-										<option value="4">하나카드</option>
+										<option value="국민카드">국민카드</option>
+										<option value="신한카드">신한카드</option>
+										<option value="우리카드">우리카드</option>
+										<option value="하나카드">하나카드</option>
 									</select>
 								</td>
 							</tr>
@@ -299,8 +294,8 @@
 								<td width="150"><b>할부</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<select name="card_halbu" class="cmfont1">
-										<option value="0">일시불</option>
+									<select name="installment" class="cmfont1">
+										<option value="lump">일시불</option>
 										<option value="3">3 개월</option>
 										<option value="6">6 개월</option>
 										<option value="9">9 개월</option>
@@ -329,10 +324,10 @@
 								<td width="150"><b>은행선택</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<select name="bank_kind"  class="cmfont1" disabled>
+									<select name="account"  class="cmfont1" disabled>
 										<option value="">입금할 은행을 선택하세요.</option>
-										<option value="1">국민은행 000-00000-0000</option>
-										<option value="2">신한은행 000-00000-0000</option>
+										<option>국민은행 000-00000-0000</option>
+										<option>신한은행 000-00000-0000</option>
 									</select>
 								</td>
 							</tr>
@@ -340,7 +335,7 @@
 								<td width="150"><b>입금자 이름</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="bank_sender" size="15" maxlength="20" value="" class="cmfont1" disabled>
+									<input type="text" name="depositor" size="15" maxlength="20" value="" class="cmfont1" disabled>
 								</td>
 							</tr>
 						</table>

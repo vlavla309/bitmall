@@ -5,13 +5,13 @@
 <footer id="footer">
 	<div id="wrap-footer-item">
 	<div>
-		<ul class="utilMenu">
+	<div>
+	<ul class="utilMenu">
 			<li><a href="${pageContext.servletContext.contextPath}/company">COMPANY</a></li>
 			<li><a href="">AGREEMENT</a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/policy"><strong>PRIVACY POLICY</strong></a></li>
 			<li><a href="${pageContext.servletContext.contextPath}/info">GUIDE</a></li>
-		</ul>
-	</div>
+	</ul>
 	<ul class="cs">
 		<h2>CS CENTER</h2>
 		<li>02-1234-1234</li>
@@ -36,4 +36,7 @@
 	</ul>
 	</div>
 	<p class="copyright">Copyright © 2018 <strong>김형주</strong>. All rights reserved.</p>
+	</div>
+	</div>
+	
 </footer>

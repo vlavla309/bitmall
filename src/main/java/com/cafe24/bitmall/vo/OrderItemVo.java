@@ -99,4 +99,5 @@ public class OrderItemVo {
 				+ optionNo2 + ", optionName1=" + optionName1 + ", optionName2=" + optionName2 + ", product=" + product
 				+ ", option1=" + option1 + ", option2=" + option2 + "]";
 	}
+	
 }

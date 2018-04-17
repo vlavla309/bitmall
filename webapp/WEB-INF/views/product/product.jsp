@@ -56,7 +56,12 @@
 				</c:choose>
 				</h1>
 				<div id = "menu-sort">
-					<p><b>${pb.totalItemCount}</b> 개의 상품<p>
+					<p>
+						<c:if test="${not empty params.searchType}">
+						<strong>"${params.searchValue}"</strong>로 검색한 결과
+						</c:if>
+						<b>${pb.totalItemCount}</b> 개의 상품
+					<p>
 				
 					<ul>
 						<li><a href="" class="btn-sort" data-value="new">신상품</a></li>

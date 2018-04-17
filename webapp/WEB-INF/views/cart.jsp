@@ -13,8 +13,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/global.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/cart.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/product.js"></script>
 	<script type="text/javascript">
 		$(function(){
+			setTotalPrice();
 			$(".btn-buy").click(function(evt){
 				evt.preventDefault();
 				console.log("click:구매버튼");
@@ -22,7 +24,8 @@
 				
 				let $form = $('<form></form>');
 				let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
-				$form.attr('action', '${pageContext.servletContext.contextPath}/order/add').attr('method', 'post').appendTo('body').append(data);
+				let cart = $("<input type='hidden' value='cart' name='cart'>");
+				$form.attr('action', '${pageContext.servletContext.contextPath}/order/add').attr('method', 'post').appendTo('body').append(data).append(cart);
 			    console.log(jsonStr);
 			    $form.submit();
 			});
@@ -58,12 +61,12 @@
 	<div class="header-title">
 		<h1>cart</h1>
 	</div>
-	<div id ="wrap-cart">
+	<div id ="wrap-cart" class="wrap-content">
 		<c:forEach items="${cartItems}" var="item" varStatus="stat">
 			<form class="form-product" data-value="${stat.index}">
 				<input type="hidden" name="productNo" value="${item.productNo}">
 				<input type="hidden" name="quantity" value="${item.quantity}">
-				<input type="hidden" name="price" value="${item.quantity *  item.price}">
+				<input type="hidden" name="price" value="${item.price}">
 				<input type="hidden" name="optionNo1" value="${item.optionNo1}"/>
 				<input type="hidden" name="optionNo2" value="${item.optionNo2}"/>
 			</form>
@@ -93,6 +96,7 @@
 						</table>
 					</td>
 					<td align="center"><font color="#464646">${item.quantity }&nbsp개</font></td>
+					<%-- <td align="center"><input type="number" name="quantity" value="${item.quantity }"/></td> --%>
 					<td align="center"><font color="#464646"><fmt:formatNumber value="${item.price }" pattern="#,###"/></font> 원</td>
 					<td align="center"><font color="#464646"><fmt:formatNumber value="${item.quantity *  item.price}" pattern="#,###"/></font> 원</td>
 					<td align="center" bgcolor="#FFFFFF">
@@ -107,7 +111,7 @@
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 							<tbody><tr>
 								<td bgcolor="#F0F0F0"><img src="/bitmall/assets/images/cart_image1.gif" border="0"></td>
-								<td align="right" bgcolor="#F0F0F0">
+								<td align="right" bgcolor="#F0F0F0" id="td-totalPrice">
 									<font color="#0066CC"><b>총 합계금액</b></font> : 상품대금(132,000원) + 배송료(2,500원) = <font color="#FF3333"><b>134,500원</b></font>&nbsp;&nbsp;
 								</td>
 							</tr>
