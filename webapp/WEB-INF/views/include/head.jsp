@@ -21,7 +21,7 @@
 				<c:when test="${empty authMember}">
 				
 					<li><a href="${pageContext.servletContext.contextPath }/member/login" class="xans-element- xans-layout xans-layout-statelogoff log ">LOGIN</a></li>
-					<li><a href="${pageContext.servletContext.contextPath }/member/join" class="xans-element- xans-layout xans-layout-statelogoff log ">JOIN</a></li>
+					<li><a href="${pageContext.servletContext.contextPath }/member/agreement" class="xans-element- xans-layout xans-layout-statelogoff log ">JOIN</a></li>
 					<li></li>
 				
 				</c:when>

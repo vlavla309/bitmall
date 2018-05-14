@@ -15,11 +15,11 @@ SELECT a.no,
        a.is_sale       AS 'isSale', 
        a.discount_rate AS 'discountRate', 
        a.status, 
-       a.reg_date, 
+       Date_format(a.reg_date, '%Y-%m-%d') AS 'regDate', 
        a.option_no1    AS 'optionNo1', 
        a.option_no2    AS 'optionNo2', 
        a.category_no   AS 'categoryNo', 
-       b.path          AS 'imagePath' 
+       b.path          AS 'imagePath'
 FROM   product a, 
        product_image b 
 WHERE  a.no = b.product_no 
@@ -67,7 +67,7 @@ LEFT JOIN product_image b ON a.no = b.product_no ]]>
     		AND a.is_sale = true
     	</when>
     </choose>
-    <if test="params.status != null">
+    <if test="params.status != 'all'">
     		AND a.status = #{params.status} 
     </if>
     <choose>
@@ -117,7 +117,7 @@ LEFT JOIN product_image b ON a.no = b.product_no ]]>
     		AND a.is_sale = true
     	</when>
     </choose>
-    <if test="params.status != null">
+    <if test="params.status != 'all'">
     		AND a.status = #{params.status} 
     </if>
     <choose>

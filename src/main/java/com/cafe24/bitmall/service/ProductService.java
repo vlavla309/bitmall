@@ -21,7 +21,7 @@ import com.cafe24.bitmall.vo.ProductVo;
 
 @Service
 public class ProductService {
-	private static final int PRODUCT_PER_PAGE = 2;
+	private static final int PRODUCT_PER_PAGE = 12;
 	private static final int PAGINATION_PER_PAGE = 5;
 	
 	@Autowired
@@ -43,17 +43,24 @@ public class ProductService {
 		map.put("productImages", productImgDao.getList(no));
 		map.put("options1", optionDao.getList(product.getOptionNo1()));
 		map.put("options2", optionDao.getList(product.getOptionNo2()));
+		map.put("categories", categoryDao.getList());
+		map.put("options", optionDao.getList());
 		return map;
 	}
 	
-	public Map<String, Object> getProductListByParam(Param params){
+	public Map<String, Object> getProductListByParam(ProductParam params){
 		return getProductListByParam(params, PRODUCT_PER_PAGE, PAGINATION_PER_PAGE);
 	}
 	
-	public Map<String, Object> getProductListByParam(Param params, int productPerPage, int paginationPerPage){
+	public Map<String, Object> getProductListByParam(ProductParam params, int productPerPage, int paginationPerPage){
 		Map<String, Object> map = new HashMap<>();
 		
+		if(params.getStatus()==null || (params.getStatus()).equals("")) {
+			params.setStatus("all");
+		}
+		
 		params.build();
+//		System.out.println(params);
 		if(params.getSearchValue()!=null) {
 			params.setSearchValue("%"+params.getSearchValue()+"%");
 		}
@@ -64,9 +71,9 @@ public class ProductService {
 		PaginationBuilder pb=new PaginationBuilder(params, totalProductCount, productPerPage, paginationPerPage);
 		pb.build();
 		//System.out.println(pb);
-	/*	for (ProductVo productVo : products) {
-			System.out.println(productVo);
-		}*/
+		for (ProductVo productVo : products) {
+//			System.out.println(productVo);
+		}
 		
 		CategoryVo category = categoryDao.get(((ProductParam)params).getCategoryNo());
 		
@@ -99,7 +106,7 @@ public class ProductService {
 				productImg.setPath(path);
 				productImg.setOrderNo(order++);
 				productImg.setProductNo(product.getNo());
-				System.out.println(productImg);
+//				System.out.println(productImg);
 				result = productImgDao.insert(productImg);
 			}
 

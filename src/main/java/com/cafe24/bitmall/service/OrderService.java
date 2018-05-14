@@ -70,7 +70,7 @@ public class OrderService {
 		
 		for (OrderVo orderVo : orders) {
 			orderVo.setOrderItems(orderItemDao.getList(orderVo.getCode()));
-			System.out.println(orderVo);
+//			System.out.println(orderVo);
 		}
 		
 		PaginationBuilder pb=new PaginationBuilder(params, totalOrderCount, orderPerPage, paginationPerPage);
@@ -81,7 +81,7 @@ public class OrderService {
 
 		pb.build();
 		params.build();
-		System.out.println(pb);
+//		System.out.println(pb);
 		map.put("orders", orders);
 		map.put("params", params);
 		map.put("pb", pb);
@@ -152,7 +152,7 @@ public class OrderService {
 		order.setCode(orderCode);
 		order.setTotalPrice(totalPrice+2500);
 		orderDao.insert(order);
-		System.out.println(order);
+		//System.out.println(order);
 		for (OrderItemVo orderItem : orderItems) {
 			orderItemDao.insert(orderItem);
 		}

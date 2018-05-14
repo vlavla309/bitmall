@@ -3,6 +3,8 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,11 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.bitmall.service.AdminService;
 import com.cafe24.bitmall.service.ProductService;
+import com.cafe24.bitmall.util.ProductParam;
 import com.cafe24.bitmall.vo.ProductVo;
 
 @RequestMapping("/admin/product")
 @Controller(value="adminProductController")
 public class ProductController {
+	private static final int PRODUCT_PER_PAGE = 4;
+	private static final int PAGINATION_PER_PAGE = 5;
+	
 	@Autowired
 	private AdminService adminServ;
 	@Autowired
@@ -22,6 +28,17 @@ public class ProductController {
 	
 	
 	//Product
+	//list
+	@RequestMapping(value="", method=RequestMethod.GET)
+	public String listProduct(
+			Model model,
+			ProductParam params) {
+		
+		System.out.println(params);
+		model.addAllAttributes(productServ.getProductListByParam(params, PRODUCT_PER_PAGE, PAGINATION_PER_PAGE));
+		return "admin/product";
+	}
+	
 	//add
 	@RequestMapping(value = "/add", method = RequestMethod.GET )
 	public String addProduct(Model model) {
@@ -79,32 +96,14 @@ public class ProductController {
 	}
 	
 	//edit
-	@RequestMapping(value = "/edit/{orderNo}", method = RequestMethod.GET )
-	public String editProduct() {
+	@RequestMapping(value = "/edit/{productNo}", method = RequestMethod.GET )
+	public String editProduct(
+			Model model,
+			@ModelAttribute("params") ProductParam params,
+			@PathVariable("productNo") Long productNo) {
+		params.build();
+		model.addAllAttributes(productServ.getProductDetail(productNo));
 		return "/admin/product_edit";
-	}
-	
-	//list
-	@RequestMapping(value="", method=RequestMethod.GET)
-	public String listProduct() {
-		return "admin/product";
-	}
-	
-	//Order
-	@RequestMapping(value="/order", method=RequestMethod.GET)
-	public String listOrder() {
-		return "admin/order";
-	}
-	
-	//Option
-	@RequestMapping(value = "/option/add", method = RequestMethod.GET )
-	public String addOption() {
-		return "admin/opt_new";
-	}
-	
-	@RequestMapping(value = "/option", method = RequestMethod.GET )
-	public String addOptions() {
-		return "admin/opt";
 	}
 	
 	//FAQ

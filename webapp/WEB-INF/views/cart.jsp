@@ -20,6 +20,12 @@
 			$(".btn-buy").click(function(evt){
 				evt.preventDefault();
 				console.log("click:구매버튼");
+				
+				if($(".form-product").length < 1){
+					alert("주문할 상품이 없습니다.");
+					return false;	
+				}
+
 				let jsonStr = ObjToJsonArrStr(".form-product");
 				
 				let $form = $('<form></form>');

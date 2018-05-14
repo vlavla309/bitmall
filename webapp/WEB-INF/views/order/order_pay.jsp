@@ -26,15 +26,15 @@
 	$(function(){
 		getCartCookieValue();
 		$("#btn-order-submit").click(function(){
-			alert("제풀");
-			let jsonStr = ObjToJsonArrStr(".form-product");
+		    let $form = $('#form-order');
+		    
+		    /alert("신청");
+
+		    let jsonStr = ObjToJsonArrStr(".form-product");
 		    console.log(jsonStr);
 		    
 		    const cardNoVal = $("input[name=card_no1]").val()+"-"+$("input[name=card_no2]").val()+"-"+$("input[name=card_no3]").val()+"-"+$("input[name=card_no4]").val();
-		    
-		    
-		    let $form = $('#form-order');
-		    
+			
 		    let cardNo = $("<input type='hidden' value="+cardNoVal+" name='cardNo'>");
 		    let data = $("<input type='hidden' value="+jsonStr+" name='data'>");
 			

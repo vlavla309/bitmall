@@ -25,6 +25,10 @@ public class MemberService {
 		return memberDao.get(id, password);
 	}
 	
+	public MemberVo getMember(String id) {
+		return memberDao.get(id);
+	}
+	
 	public boolean addMember(MemberVo vo) {
 		return memberDao.insert(vo);
 	}

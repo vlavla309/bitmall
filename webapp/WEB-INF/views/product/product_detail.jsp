@@ -161,9 +161,22 @@
 								<span><input type='number' name='quantity' min="1" value='1'/></span>
 							</li>
 						</ol>
+						<c:choose>
+							<c:when test="${product.status == 'onsale'}">
+								<button type="button" class="btn-buy">바로 구매</button>
+								<button type="button" class="btn-add-cart" >장바구니 담기</button>
+							</c:when>
+							<c:when test="${product.status == 'nosale'}">
+								<button type="button" class="btn-buy-impossible" disabled="disabled">판매 중지</button>
+							</c:when>
+							<c:when test="${product.status == 'soldout'}">
+								<button type="button" class="btn-buy-impossible" disabled="disabled">품절</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn-buy-impossible" disabled="disabled">구매 불가</button>
+							</c:otherwise>
+						</c:choose>
 						
-						<button type="button" class="btn-buy">바로 구매</button>
-						<button type="button" class="btn-add-cart" >장바구니 담기</button>
 					</div>
 			</header>
 			</form>

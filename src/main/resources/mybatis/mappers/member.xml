@@ -29,6 +29,23 @@
 		WHERE no = #{no}
 	]]>
 	</select>
+	
+	<select id="getById" parameterType="string" resultType="membervo">
+	<![CDATA[
+		SELECT no,
+			 id, 
+             name, 
+			 birth_date as 'birthDate', 
+             phone1, 
+             phone2, 
+             zipcode, 
+             address, 
+             email
+		FROM member  
+		WHERE id = #{id}
+	]]>
+	</select>
+	
 		
 	<insert id ="insert" parameterType="membervo" >
 		<![CDATA[

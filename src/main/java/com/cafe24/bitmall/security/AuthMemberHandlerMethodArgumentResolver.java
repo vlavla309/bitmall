@@ -20,7 +20,7 @@ public class AuthMemberHandlerMethodArgumentResolver implements HandlerMethodArg
 		ModelAndViewContainer mavContainer,
 		NativeWebRequest webRequest,
 		WebDataBinderFactory binderFactory) throws Exception {
-		
+		System.out.println("아규먼트 리졸버");
 		if( supportsParameter( parameter ) == false ) {
 			return WebArgumentResolver.UNRESOLVED;
 		}

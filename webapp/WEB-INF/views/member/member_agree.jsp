@@ -7,25 +7,17 @@
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
-</head>
-<body style="margin:0">
-<jsp:include page="/WEB-INF/views/include/head.jsp"/>
-<jsp:include page="/WEB-INF/views/include/search.jsp"/>
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr><td height="10" colspan="2"></td></tr>
-	<tr>
-		<td height="100%" valign="top">
-			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
-		</td>
-		<td width="10"></td>
-		<td valign="top">
-
-		<!-------------------------------------------------------------------------------------------->	
-		<!-- 시작 : 다른 웹페이지 삽입할 부분                                                                                                                                                            -->
-		<!-------------------------------------------------------------------------------------------->	
-
-
-			<!--  현재 페이지 자바스크립  -------------------------------------------->
+	<link href="${pageContext.servletContext.contextPath }/assets/css/global.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/product.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.servletContext.contextPath }/assets/css/member.css" rel="stylesheet" type="text/css">
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/global.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/cart.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/RegularExpression.js"></script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<!--  현재 페이지 자바스크립  -------------------------------------------->
 			<script language = "javascript">
 				function CheckAgree() 
 				{
@@ -34,9 +26,21 @@
 						alert("이용약관 내용에 동의를 체크해 주십시오.");
 						return;
 					}
-					location.href = "/user/member_join";
+					location.href = "${pageContext.servletContext.contextPath}/member/join";
 				}
 			</script>
+</head>
+<body style="margin:0">
+<jsp:include page="/WEB-INF/views/include/head.jsp"/>
+<div id="wrapper">
+	<div class="wrap-content">
+
+		<!-------------------------------------------------------------------------------------------->	
+		<!-- 시작 : 다른 웹페이지 삽입할 부분                                                                                                                                                            -->
+		<!-------------------------------------------------------------------------------------------->	
+
+
+			
 
 			<table border="0" cellpadding="0" cellspacing="0" width="747">
 				<tr><td height="13"></td></tr>
@@ -116,7 +120,7 @@
 				<tr>
 					<td height="45" align="right">
 						<a href="javascript:CheckAgree()"><img src="${pageContext.servletContext.contextPath }/assets/images/b_agreeok.gif" border="0"></a> 
-						<a href="index.html"><img src="${pageContext.servletContext.contextPath }/assets/images/b_agreeno.gif" border="0"></a>
+						<a href="${pageContext.servletContext.contextPath}"><img src="${pageContext.servletContext.contextPath }/assets/images/b_agreeno.gif" border="0"></a>
 					</td>
 				</tr>
 			</table>
@@ -125,71 +129,7 @@
 		<!-- 끝 : 다른 웹페이지 삽입할 부분                                                                                                                                                              -->
 		<!-------------------------------------------------------------------------------------------->
 
-		</td>
-	</tr>
-</table>
-
-
-<!-- 화면 하단 부분 : 회사정보/회사소개/이용정보/개인보호정책 ... ---------------------------->
-<br><br>
-<table width="959" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
-	<tr> 
-		<td background="${pageContext.servletContext.contextPath }/assets/images/footer_bg.gif" height="11"></td>
-	</tr>
-	<tr><td height="5"></td></tr>
-	<tr> 
-		<td> 
-			<table width="959" border="0" cellspacing="0" cellpadding="0">
-				<tr> 
-					<td valign="top"><a href="index.html"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_logo.gif" border="0"></a></td>
-					<td width="28"></td>
-					<td> 
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr> 
-								<td> 
-									<table border="0" cellspacing="0" cellpadding="0">
-										<tr> 
-											<td><a href="company.html"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu01.gif" border="0"></a></td>
-											<td><img src="${pageContext.servletContext.contextPath }/assets/images/footer_line.gif"></td>
-											<td><a href="useinfo.html"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu02.gif" border="0"></a></td>
-											<td><img src="${pageContext.servletContext.contextPath }/assets/images/footer_line.gif"></td>
-											<td><a href="policy.html"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu03.gif" border="0"></a></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr> 
-								<td><img src="${pageContext.servletContext.contextPath }/assets/images/footer_copyright.gif"></td>
-							</tr>
-						</table>
-					</td>
-					<td align="right" valign="top">
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr> 
-								<td align="right">
-										<a href="index.html"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_home.gif" border="0"></a>&nbsp
-										<a href="#top"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_top.gif" border="0"></a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<table border="0" cellspacing="0" cellpadding="0">
-										<tr> 
-											<td><A HREF="http://www.ftc.go.kr/" target="_blank"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_pic1.gif" border=0></A></td>
-											<td><img src="footer_line.gif" width="3" height="42"></td>
-											<td><A HREF="http://www.sgic.co.kr/" target="_blank"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_pic2.gif" border=0></a></td>
-										</tr>
-									</table>
-								</td>
-							<tr> 
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-<br><br>
+</div></div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

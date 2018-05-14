@@ -14,10 +14,8 @@
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <div id ="wrapper">
 	<div class="wrap-content">
-
 <form name="form1" action="${pageContext.servletContext.contextPath}/admin/product/add" method="post" enctype="multipart/form-data" >
-<jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
-<hr width='900' size='3'>
+
 <table width="800" border="1" cellspacing="0" cellpadding="3" bordercolordark="white" bordercolorlight="black">
 	<tr height="23"> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품분류</td>

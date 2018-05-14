@@ -35,7 +35,11 @@
 
 			$("#status").change(function(){
 				$("#form-search").submit();
-			})
+			});
+			
+			$(".btn-order-delete").click(function(){
+				alert("아직..ㅎㅎ")
+			});
 		});
 	</script>
 </head>
@@ -130,8 +134,8 @@ action="">
 			<input data-code="${order.code}" class="btn-order-edit" type="image" src="${pageContext.servletContext.contextPath }/assets/images/admin/b_edit1.gif" border="0">
 		</td>	
 		<td width="50" align="center" valign="bottom">
-			<a href=""><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
-		</td>
+			<a class="btn-order-delete" href="#"><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
+		</td> 
 		</form>
 	</tr>
 	</c:forEach>

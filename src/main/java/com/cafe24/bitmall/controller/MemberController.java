@@ -28,7 +28,10 @@ public class MemberController {
 	private OrderService orderServ;
 	
 	@RequestMapping(value = "/join", method=RequestMethod.GET )
-	public String joinform() {
+	public String joinform(@AuthMember MemberVo authMember) {
+		if(authMember != null) {
+			return "redirect:/";
+		}
 		return "member/member_join";
 	}
 	
@@ -40,7 +43,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/welcome", method=RequestMethod.GET )
-	public String welcom() {
+	public String welcom(@AuthMember MemberVo authMember) {
+		if(authMember != null) {
+			return "redirect:/";
+		}
 		return "member/member_joinend";
 	}
 	
@@ -83,5 +89,18 @@ public class MemberController {
 		//System.out.println(params);
 		model.addAllAttributes(orderServ.getOrderListByParam(params,ORDER_PER_PAGE, PAGINATION_PER_PAGE));
 		return "order/order";
+	}
+	
+	
+	@RequestMapping("/agreement")
+	public String agreement(
+			Model model,
+			@AuthMember MemberVo authMember,
+			OrderParam params
+			) {
+		if(authMember != null) {
+			return "redirect:/";
+		}
+		return "member/member_agree";
 	}
 }

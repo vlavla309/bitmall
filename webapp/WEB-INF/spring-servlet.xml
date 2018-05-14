@@ -42,8 +42,7 @@
 	<mvc:default-servlet-handler />
 
 	<!-- the mvc resources tag does the magic -->
-	<mvc:resources mapping="/assets/uploads/**"
-		location="file:/bitmall/uploads/" />
+	<mvc:resources mapping="/assets/uploads/**" location="file:/bitmall/uploads/" />
 
 
 

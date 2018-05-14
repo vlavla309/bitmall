@@ -9,6 +9,9 @@
     font-family: 'Kanit', sans-serif;
   	 color:#333;
 }	
+body{
+	background-color: #fff;
+}
 
 input[type='number'] {
     -moz-appearance:textfield;
@@ -406,4 +409,12 @@ ol.pagination li img{
 	margin:0;
 	padding:0;
 	vertical-align: top;
+}
+
+.success{
+	color:#0f0;
+}
+
+.error{
+	color:#f00;
 }

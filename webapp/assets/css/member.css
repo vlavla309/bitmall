@@ -18,3 +18,7 @@ input.phone{
 	width:54px;
 	
 }
+
+form#form-member .error{
+	margin-left:10px;
+}

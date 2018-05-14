@@ -44,7 +44,7 @@ public class CartService {
 			e.printStackTrace();
 		}
 		for (OrderItemVo orderItemVo : cartItems) {
-			System.out.println(orderItemVo);
+			//System.out.println(orderItemVo);
 			orderItemVo.setProduct(productDao.get(orderItemVo.getProductNo()));
 			orderItemVo.setOption1(optionDao.get(orderItemVo.getOptionNo1()));
 			orderItemVo.setOption2(optionDao.get(orderItemVo.getOptionNo2()));
